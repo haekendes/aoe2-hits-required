@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  {% if title %}
+      <title>{{ title }} (￣ω￣)~Haekendes</title>
+  {% endif %}
+  {% block styles %}
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='slick.grid.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='jquery-ui.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='slick-default-theme.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='select2.min.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" type="text/css"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='8yooac163g431_Yl5_icon.ico') }}">
+  {% endblock %}
+</head>
+<body>
+  <div class="container hv-100">
+  <div class="row p-4 m-4">
+    <div class="col-sm">
+      <select class="browser-default custom-select select-catcher">
+        <option></option>
+      </select>
+    </div>
+    <div class="col-sm">
+      <select class="browser-default custom-select select-pitcher">
+        <option></option>
+      </select>
+      </div>
+  </div>
+  <div>
+    <table class="table " width="100%">
+      <tr>
+        <td valign="top" class="grid-col w-100">
+          <div id="myGrid" style="width:600px;height:500px;"></div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='jquery-1.12.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery.event.drag-2.3.0.js') }}"></script>
+
+<script src="{{ url_for('static', filename='slick.core.js') }}"></script>
+<script src="{{ url_for('static', filename='slick.grid.js') }}"></script>
+
+<script src="{{ url_for('static', filename='select2.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='home.js') }}"></script>
+</body>
+</html>
