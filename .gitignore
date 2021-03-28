@@ -1,0 +1,13 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+.idea/
+__pycache__/
+venv/
+images/
+react-client/.eslintcache
+Anforderungen & Umsetzung.txt
+Video.txt
+SlickGrid-2.4.33.zip
+Fortschritt Bilder/
+select2-4.1.0-rc.0.zip
+Libraries.txt

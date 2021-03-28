@@ -1,0 +1,25 @@
+#myGrid {
+    width: 100% !important;
+}
+
+.slick-row.odd {
+    background: #f9fcfc;
+}
+
+.slick-cell, .slick-header-column {
+    text-align: center;
+}
+.slick-cell {
+    border: 1px solid aliceblue;
+    
+}
+
+.slick-header-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slick-header-column {
+    background: #eaeeee;
+}
