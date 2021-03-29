@@ -2,10 +2,23 @@ var fetchedData,
     columnNames,
     tableData,
     selectData,
-    tableElement = document.getElementById("myGrid")
-    il = 0;
+    tableElement = document.getElementById("myGrid");
 
 fetchData();
+
+initSite();
+
+function initSite() {
+  setColumnData();
+  //console.log(columnNames);
+  setTableData();
+  console.log(fetchedData['table']);
+  console.log(tableData)
+  initializeTable(columnNames, tableData);
+
+  setSelectData(columnNames);
+  initSelectors();
+}
 
 function initSelectors() {
 $(document).ready(function() {
@@ -20,13 +33,13 @@ $(document).ready(function() {
     data: selectData
   });
   $('.select-catcher').on('select2:select', function (e) {
-    var data = e.params.data;
-    console.log("Catcher: Selected " + data['text']);
+    select1 = e.params.data;
+    console.log("Catcher: Selected " + select1['text']);
     //console.log(data);
     //console.log(columnNames[data['id']]);
     //console.log(Object.values(fetchedData['table'][data['id']])[0]);
     tableData = [];
-    innerTableData(Object.values(fetchedData['table'][data['id']])[0]);
+    innerTableData(Object.values(fetchedData['table'][select1['id']])[0]);
     initializeTable(columnNames, tableData);
   });
   $('.select-catcher').on('select2:unselect', function (e) {
@@ -35,26 +48,17 @@ $(document).ready(function() {
     initializeTable(columnNames, tableData);
   });
   $('.select-pitcher').on('select2:select', function (e) {
-    var data = e.params.data;
-    console.log("Pitcher: Selected " + data['text']);
-    
+    select2 = e.params.data;
+    console.log("Pitcher: Selected " + select2['text']);
+    setSingleColumnData(select2);
+    initializeTable(columnNames, tableData);
   });
   $('.select-pitcher').on('select2:unselect', function (e) {
     console.log("Pitcher: unselected");
+    setColumnData()
+    initializeTable(columnNames, tableData);
   });
 });
-}
-
-function setSelectData(data) {
-  selectData = []
-  index = 0;
-  for (e in fetchedData['table']) {
-    selectData.push({
-      id: index,
-      text: Object.keys(fetchedData['table'][e])[0]
-    });
-    index++;
-  }
 }
 
 function innerTableData(objDict) {
@@ -79,11 +83,29 @@ function setTableData() {
   
 }
 
+function setSingleColumnData(data) {
+  console.log(data)
+  obj = Object.values(Object.values(Object.values(fetchedData['table'])[0])[0])[0][data['id']];
+  columnNames = (Object.keys(obj));
+}
+
 function setColumnData() {
   columnNames = []
   objList = Object.values(Object.values(Object.values(fetchedData['table'])[0])[0])[0];
   for (e of objList) {
     columnNames = columnNames.concat(Object.keys(e));
+  }
+}
+
+function setSelectData(data) {
+  selectData = []
+  index = 0;
+  for (e in fetchedData['table']) {
+    selectData.push({
+      id: index,
+      text: Object.keys(fetchedData['table'][e])[0]
+    });
+    index++;
   }
 }
 
@@ -96,8 +118,6 @@ function initializeTable(colNames, data) {
     
   
     var options = {
-      editable: false,
-      enableAddRow: false,
       enableCellNavigation: true,
       enableColumnReorder: false,
       frozenColumn: 0,
@@ -120,16 +140,7 @@ function fetchData() {
           // Examine the text in the response
           response.json().then(function(data) {
             fetchedData = data;
-
-            setColumnData();
-            //console.log(columnNames);
-            setTableData();
-            console.log(fetchedData['table']);
-            console.log(tableData)
-            initializeTable(columnNames, tableData);
-
-            setSelectData(columnNames);
-            initSelectors();
+            initSite();
           });
         }
       )

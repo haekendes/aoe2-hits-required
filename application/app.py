@@ -15,23 +15,24 @@ def zumbla(unit_catcher):
     for unit_pitcher in unit_pitchers:
         inner_dict = {}
         # columns
-        inner_dict[unit_pitcher.get_name()] = unit_catcher - unit_pitcher  # dict[column_name] = column_values
+        if not 25 in unit_pitcher.ARMOR_CLASSES:
+            inner_dict[unit_pitcher.get_name()] = unit_catcher - unit_pitcher  # dict[column_name] = column_values
 
-        # attack upgrades
-        if not any(x in unit_pitcher.ARMOR_CLASSES for x in [17, 25, 34]):  # no rams, monks or fishing ships
-            inner_dict[unit_pitcher.get_name() + "+1"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=1) \
-                if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
-
-            if not any(x in unit_pitcher.ARMOR_CLASSES for x in [20, ]):  # no siege weapons
-                inner_dict[unit_pitcher.get_name() + "+2"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=1) \
+            # attack upgrades
+            if not any(x in unit_pitcher.ARMOR_CLASSES for x in [17, 34]):  # no rams, monks or fishing ships
+                inner_dict[unit_pitcher.get_name() + "+1"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=1) \
                     if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
 
-                if unit_pitcher.PIERCE_ATTACK > 0:
-                    inner_dict[unit_pitcher.get_name() + "+3"] = unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
+                if not any(x in unit_pitcher.ARMOR_CLASSES for x in [20, ]):  # no siege weapons
+                    inner_dict[unit_pitcher.get_name() + "+2"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=1) \
+                        if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
 
-                inner_dict[unit_pitcher.get_name() + "+4"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=2) \
-                    if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
-        column_list.append(inner_dict)
+                    if unit_pitcher.PIERCE_ATTACK > 0:
+                        inner_dict[unit_pitcher.get_name() + "+3"] = unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
+
+                    inner_dict[unit_pitcher.get_name() + "+4"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=2) \
+                        if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
+            column_list.append(inner_dict)
     return column_list
 
 
