@@ -3,7 +3,7 @@ import math
 
 class Unit(object):
     def __init__(self, hp, melee_attack, pierce_attack, melee_armor, pierce_armor, armor_classes,
-                 armor_class_values=None, bonus_attack_classes=None, bonus_attack_values=None):
+                 armor_class_values=None, bonus_attack_classes=None, bonus_attack_values=None, displayed_name=None):
         self.HP = hp
         self.MELEE_ATTACK = melee_attack
         self.PIERCE_ATTACK = pierce_attack
@@ -12,6 +12,7 @@ class Unit(object):
         self.ARMOR_CLASSES = zip_class_values(armor_classes, armor_class_values) if armor_classes else {0: 0}
         self.BONUS_ATTACK = zip_class_values(bonus_attack_classes, bonus_attack_values) if bonus_attack_values else {
             0: 0}
+        self.DISPLAYED_NAME = displayed_name
 
         self.HP_UPGRADE = 0
         self.MELEE_ATTACK_UPGRADE = 0
@@ -30,22 +31,15 @@ class Unit(object):
 
     def __sub__(self, unit):
         result = int(math.ceil((self.HP + self.HP_UPGRADE)
-                               / max(1, (max(0, unit.MELEE_ATTACK + unit.MELEE_ATTACK_UPGRADE - (
-                    self.MELEE_ARMOR + self.MELEE_ARMOR_UPGRADE))
-                                         + max(0, unit.PIERCE_ATTACK + unit.PIERCE_ATTACK_UPGRADE - (
-                            self.PIERCE_ARMOR + self.PIERCE_ARMOR_UPGRADE))
+                               / max(1, (max(0, unit.MELEE_ATTACK + unit.MELEE_ATTACK_UPGRADE - (self.MELEE_ARMOR + self.MELEE_ARMOR_UPGRADE) if unit.MELEE_ATTACK > 0 else 0)
+                                         + max(0, unit.PIERCE_ATTACK + unit.PIERCE_ATTACK_UPGRADE - (self.PIERCE_ARMOR + self.PIERCE_ARMOR_UPGRADE))
                                          + sum(max(0, value - self.ARMOR_CLASSES[key])
                                                if key in self.ARMOR_CLASSES else 0
-                                               for key, value in unit.BONUS_ATTACK.items())
-                                         ))))
-        # if unit.MELEE_ATTACK > 0:
-        # print(f"{self.__class__.__name__} +{self.MELEE_ARMOR_UPGRADE}+{self.PIERCE_ARMOR_UPGRADE} requires {result} hits from {unit.__class__.__name__} +{unit.MELEE_ATTACK_UPGRADE}")
-        # else:
-        # print(f"{self.__class__.__name__}+{self.MELEE_ARMOR_UPGRADE}+{self.PIERCE_ARMOR_UPGRADE} requires {result} hits from {unit.__class__.__name__}+{unit.PIERCE_ATTACK_UPGRADE}")
+                                               for key, value in unit.BONUS_ATTACK.items())))))
         return result
 
     def get_name(self):
-        return self.__class__.__name__
+        return self.DISPLAYED_NAME if self.DISPLAYED_NAME else self.__class__.__name__
 
 
 def zip_class_values(armor_classes, armor_class_values):
@@ -77,9 +71,9 @@ class Scout(Unit):
         super().__init__(45, 5, 0, 0, 2, armor_classes=(8,), bonus_attack_classes=(25,), bonus_attack_values=(6,))
 
 
-class MenAtArms(Unit):
+class ManAtArms(Unit):
     def __init__(self):
-        super().__init__(45, 6, 0, 0, 1, armor_classes=(1,), bonus_attack_classes=(29,), bonus_attack_values=(2,))
+        super().__init__(45, 6, 0, 0, 1, armor_classes=(1,), bonus_attack_classes=(29,), bonus_attack_values=(2,), displayed_name="Man-at-Arms")
 
 
 class Spearman(Unit):

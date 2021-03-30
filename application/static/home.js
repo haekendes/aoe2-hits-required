@@ -6,8 +6,6 @@ var fetchedData,
 
 fetchData();
 
-initSite();
-
 function initSite() {
   setColumnData();
   //console.log(columnNames);
@@ -111,9 +109,9 @@ function setSelectData(data) {
 
 function initializeTable(colNames, data) {
     var grid;
-    var columns = [{id: "empty", name: "", field: "empty", minWidth: 150}]
+    var columns = [{id: "empty", name: "", field: "empty", minWidth: 200}]
     for (e of colNames) {
-      columns.push({id: e, name: e, field: e, minWidth: 150});
+      columns.push({id: e, name: e, field: e, minWidth: 175});
     };
     
   
