@@ -7,13 +7,17 @@ try:
     for cls in Unit.__subclasses__():
 
         obj = cls()
-        print(f"{obj.__class__.__name__}, HP: {obj.HP}, Attack:{obj.MELEE_ATTACK}m,{obj.PIERCE_ATTACK}p, Armor:{obj.MELEE_ARMOR}m,{obj.PIERCE_ARMOR}p")
+        print(f"{obj.__class__.__name__}, HP: {obj.hp}, Attack:{obj.melee_attack}m,{obj.pierce_attack}p, Armor:{obj.melee_armor}m,{obj.pierce_armor}p")
 
         print(f"{'':<4}Armor classes:\n{'':<8}", end='')
-        print(*[f'{get_armor_class_name(key)}: {value}' for key, value in obj.ARMOR_CLASSES.items()], sep=", ")
+        print(*[f'{get_armor_class_name(key)}: {value}' for key, value in obj.armor_classes.items()], sep=", ")
 
         print(f"{'':<4}Attack bonuses:\n{'':<8}", end='')
-        print(*[f'{get_armor_class_name(key)}: {value}' for key, value in obj.BONUS_ATTACK.items()], sep=", ")
+        print(*[f'{get_armor_class_name(key)}: {value}' for key, value in obj.bonus_attack.items()], sep=", ")
+
+        print(f"{'':<4}Upgrades:\n{'':<8}", end='')
+        print(f"atk: {obj.atk_upgrades}\n{'':<8}", end='')
+        print(f"def: {obj.def_upgrades}")
 
     print("\nAll unit classes working.")
 except:

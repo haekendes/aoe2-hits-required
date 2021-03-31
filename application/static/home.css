@@ -22,10 +22,19 @@
     
 }
 
+.slick-header {
+    border: 1px solid #d3d3d3;
+}
+
+.slick-header-columns {
+    border-bottom: 1px solid silver;
+}
+
 .slick-header-column {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-right: 1px solid silver;
 }
 
 .slick-header-column {

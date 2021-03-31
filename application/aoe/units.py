@@ -1,52 +1,104 @@
 import math
 
 
+class Upgrade(object):
+    def __init__(self, hp_upgrade=0, melee_attack_upgrade=0, pierce_attack_upgrade=0, melee_armor_upgrade=0,
+                 pierce_armor_upgrade=0):
+        self.hp_upgrade = hp_upgrade
+        self.melee_attack_upgrade = melee_attack_upgrade
+        self.pierce_attack_upgrade = pierce_attack_upgrade
+        self.melee_armor_upgrade = melee_armor_upgrade
+        self.pierce_armor_upgrade = pierce_armor_upgrade
+
+    def __repr__(self):
+        return f"{self.hp_upgrade}{self.melee_attack_upgrade}{self.pierce_attack_upgrade}{self.melee_armor_upgrade}{self.pierce_armor_upgrade}"
+
+
 class Unit(object):
     def __init__(self, hp, melee_attack, pierce_attack, melee_armor, pierce_armor, armor_classes,
-                 armor_class_values=None, bonus_attack_classes=None, bonus_attack_values=None, displayed_name=None):
-        self.HP = hp
-        self.MELEE_ATTACK = melee_attack
-        self.PIERCE_ATTACK = pierce_attack
-        self.MELEE_ARMOR = melee_armor
-        self.PIERCE_ARMOR = pierce_armor
-        self.ARMOR_CLASSES = zip_class_values(armor_classes, armor_class_values) if armor_classes else {0: 0}
-        self.BONUS_ATTACK = zip_class_values(bonus_attack_classes, bonus_attack_values) if bonus_attack_values else {
+                 armor_class_values=None, bonus_attack_classes=None, bonus_attack_values=None, displayed_name=None,
+                 atk_upgrades={}, def_upgrades={}):
+        self.hp = hp
+        self.melee_attack = melee_attack
+        self.pierce_attack = pierce_attack
+        self.melee_armor = melee_armor
+        self.pierce_armor = pierce_armor
+        self.armor_classes = zip_class_values(armor_classes, armor_class_values) if armor_classes else {0: 0}
+        self.bonus_attack = zip_class_values(bonus_attack_classes, bonus_attack_values) if bonus_attack_values else {
             0: 0}
-        self.DISPLAYED_NAME = displayed_name
+        self.displayed_name = displayed_name
 
-        self.set_def_upgrades_to_zero()
-        self.set_atk_upgrades_to_zero()
+        self.hp_upgrade = 0
+        self.melee_attack_upgrade = 0
+        self.pierce_attack_upgrade = 0
+        self.melee_armor_upgrade = 0
+        self.pierce_armor_upgrade = 0
 
-    def upgrade(self, hp_upgrade=0, melee_attack_upgrade=0, pierce_attack_upgrade=0, melee_armor_upgrade=0,
-                pierce_armor_upgrade=0):
-        self.HP_UPGRADE += hp_upgrade
-        self.MELEE_ATTACK_UPGRADE += melee_attack_upgrade
-        self.PIERCE_ATTACK_UPGRADE += pierce_attack_upgrade
-        self.MELEE_ARMOR_UPGRADE += melee_armor_upgrade
-        self.PIERCE_ARMOR_UPGRADE += pierce_armor_upgrade
+        self.def_upgrades = {}
+        self.atk_upgrades = {}
+        self.set_atk_upgrades(atk_upgrades)
+        self.set_def_upgrades(def_upgrades)
+
+    def set_def_upgrades(self, def_upgrades):
+        if any(x in self.armor_classes.keys() for x in (1, 8, 15, 30,)):
+            self.def_upgrades["+1+1"] = Upgrade(0, 0, 0, 1, 1)
+            self.def_upgrades["+2+2"] = Upgrade(0, 0, 0, 2, 2)
+            self.def_upgrades["+3+4"] = Upgrade(0, 0, 0, 3, 4)
+
+        if 8 in self.armor_classes:
+            self.def_upgrades["+Bl.+1+1"] = Upgrade(20, 0, 0, 1, 1)
+            self.def_upgrades["+Bl.+2+2"] = Upgrade(20, 0, 0, 2, 2)
+            self.def_upgrades["+Bl.+3+4"] = Upgrade(20, 0, 0, 3, 4)
+
+        for key, value in def_upgrades.items():
+            self.def_upgrades[key] = value
+
+    def set_atk_upgrades(self, atk_upgrades):
+        if any(x in self.armor_classes.keys() for x in (15, 16,)) and not 23 in self.armor_classes.keys():
+            self.atk_upgrades["+1"] = Upgrade(0, 0, 1, 0, 0)
+            self.atk_upgrades["+2"] = Upgrade(0, 0, 2, 0, 0)
+            self.atk_upgrades["+3"] = Upgrade(0, 0, 3, 0, 0)
+            self.atk_upgrades["+4"] = Upgrade(0, 0, 4, 0, 0)
+
+        elif any(x in self.armor_classes.keys() for x in (1, 8, 30,)):
+            self.atk_upgrades["+1"] = Upgrade(0, 1, 0, 0, 0)
+            self.atk_upgrades["+2"] = Upgrade(0, 2, 0, 0, 0)
+            self.atk_upgrades["+4"] = Upgrade(0, 4, 0, 0, 0)
+
+        for key, value in atk_upgrades.items():
+            self.atk_upgrades[key] = value
+
+    def upgrade(self, upgrade):
+        self.hp_upgrade += upgrade.hp_upgrade
+        self.melee_attack_upgrade += upgrade.melee_attack_upgrade
+        self.pierce_attack_upgrade += upgrade.pierce_attack_upgrade
+        self.melee_armor_upgrade += upgrade.melee_armor_upgrade
+        self.pierce_armor_upgrade += upgrade.pierce_armor_upgrade
         return self
 
     def __sub__(self, unit):
-        result = int(math.ceil((self.HP + self.HP_UPGRADE)
-                               / max(1, (max(0, unit.MELEE_ATTACK + unit.MELEE_ATTACK_UPGRADE - (self.MELEE_ARMOR + self.MELEE_ARMOR_UPGRADE) if unit.MELEE_ATTACK > 0 else 0)
-                                         + max(0, unit.PIERCE_ATTACK + unit.PIERCE_ATTACK_UPGRADE - (self.PIERCE_ARMOR + self.PIERCE_ARMOR_UPGRADE))
-                                         + sum(max(0, value - self.ARMOR_CLASSES[key])
-                                               if key in self.ARMOR_CLASSES else 0
-                                               for key, value in unit.BONUS_ATTACK.items())))))
+        result = int(math.ceil((self.hp + self.hp_upgrade)
+                               / max(1, (max(0, unit.melee_attack + unit.melee_attack_upgrade - (
+                self.melee_armor + self.melee_armor_upgrade) if unit.melee_attack > 0 else 0)
+                                         + max(0, unit.pierce_attack + unit.pierce_attack_upgrade - (
+                        self.pierce_armor + self.pierce_armor_upgrade))
+                                         + sum(max(0, value - self.armor_classes[key])
+                                               if key in self.armor_classes else 0
+                                               for key, value in unit.bonus_attack.items())))))
 
         return result
 
     def get_name(self):
-        return self.DISPLAYED_NAME if self.DISPLAYED_NAME else self.__class__.__name__
+        return self.displayed_name if self.displayed_name else self.__class__.__name__
 
     def set_def_upgrades_to_zero(self):
-        self.HP_UPGRADE = 0
-        self.MELEE_ARMOR_UPGRADE = 0
-        self.PIERCE_ARMOR_UPGRADE = 0
+        self.hp_upgrade = 0
+        self.melee_armor_upgrade = 0
+        self.pierce_armor_upgrade = 0
 
     def set_atk_upgrades_to_zero(self):
-        self.MELEE_ATTACK_UPGRADE = 0
-        self.PIERCE_ATTACK_UPGRADE = 0
+        self.melee_attack_upgrade = 0
+        self.pierce_attack_upgrade = 0
 
 
 def zip_class_values(armor_classes, armor_class_values):
@@ -80,7 +132,8 @@ class Scout(Unit):
 
 class ManAtArms(Unit):
     def __init__(self):
-        super().__init__(45, 6, 0, 0, 1, armor_classes=(1,), bonus_attack_classes=(29,), bonus_attack_values=(2,), displayed_name="Man-at-Arms")
+        super().__init__(45, 6, 0, 0, 1, armor_classes=(1,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         displayed_name="Man-at-Arms")
 
 
 class Spearman(Unit):
@@ -97,7 +150,7 @@ class EagleScout(Unit):
 
 class Villager(Unit):
     def __init__(self):
-        super().__init__(25, 3, 0, 0, 0, armor_classes=None)
+        super().__init__(25, 3, 0, 0, 0, armor_classes=None, def_upgrades={"+loom": Upgrade(15,0,0,1,2)})
 
 
 # castle
@@ -116,7 +169,7 @@ class EliteSkirmisher(Unit):
 
 class Slinger(Unit):
     def __init__(self):
-        super().__init__(40, 0, 4, 0, 0, armor_classes=(1, 19,), bonus_attack_classes=(1, 32, 17, 27,),
+        super().__init__(40, 0, 4, 0, 0, armor_classes=(15, 19,), bonus_attack_classes=(1, 32, 17, 27,),
                          bonus_attack_values=(10, 10, 3, 1,))
 
 
