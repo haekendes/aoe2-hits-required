@@ -14,11 +14,8 @@ class Unit(object):
             0: 0}
         self.DISPLAYED_NAME = displayed_name
 
-        self.HP_UPGRADE = 0
-        self.MELEE_ATTACK_UPGRADE = 0
-        self.PIERCE_ATTACK_UPGRADE = 0
-        self.MELEE_ARMOR_UPGRADE = 0
-        self.PIERCE_ARMOR_UPGRADE = 0
+        self.set_def_upgrades_to_zero()
+        self.set_atk_upgrades_to_zero()
 
     def upgrade(self, hp_upgrade=0, melee_attack_upgrade=0, pierce_attack_upgrade=0, melee_armor_upgrade=0,
                 pierce_armor_upgrade=0):
@@ -36,10 +33,20 @@ class Unit(object):
                                          + sum(max(0, value - self.ARMOR_CLASSES[key])
                                                if key in self.ARMOR_CLASSES else 0
                                                for key, value in unit.BONUS_ATTACK.items())))))
+
         return result
 
     def get_name(self):
         return self.DISPLAYED_NAME if self.DISPLAYED_NAME else self.__class__.__name__
+
+    def set_def_upgrades_to_zero(self):
+        self.HP_UPGRADE = 0
+        self.MELEE_ARMOR_UPGRADE = 0
+        self.PIERCE_ARMOR_UPGRADE = 0
+
+    def set_atk_upgrades_to_zero(self):
+        self.MELEE_ATTACK_UPGRADE = 0
+        self.PIERCE_ATTACK_UPGRADE = 0
 
 
 def zip_class_values(armor_classes, armor_class_values):

@@ -11,5 +11,5 @@ def home():
 
 @app.route('/get_table', methods=['GET'])
 def get_table():
-    return {"table": table_data, "columns": column_names}
+    return {"table": table_data}
 

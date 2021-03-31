@@ -22,17 +22,20 @@ def zumbla(unit_catcher):
             if not any(x in unit_pitcher.ARMOR_CLASSES for x in [17, 34]):  # no rams, monks or fishing ships
                 inner_dict[unit_pitcher.get_name() + "+1"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=1) \
                     if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
-
+                unit_pitcher.set_atk_upgrades_to_zero()
                 if not any(x in unit_pitcher.ARMOR_CLASSES for x in [20, ]):  # no siege weapons
-                    inner_dict[unit_pitcher.get_name() + "+2"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=1) \
-                        if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
-
+                    inner_dict[unit_pitcher.get_name() + "+2"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=2) \
+                        if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=2)
+                    unit_pitcher.set_atk_upgrades_to_zero()
                     if unit_pitcher.PIERCE_ATTACK > 0:
-                        inner_dict[unit_pitcher.get_name() + "+3"] = unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
+                        inner_dict[unit_pitcher.get_name() + "+3"] = unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=3)
+                        unit_pitcher.set_atk_upgrades_to_zero()
 
-                    inner_dict[unit_pitcher.get_name() + "+4"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=2) \
-                        if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=1)
+                    inner_dict[unit_pitcher.get_name() + "+4"] = unit_catcher - unit_pitcher.upgrade(melee_attack_upgrade=4) \
+                        if unit_pitcher.MELEE_ATTACK > 0 else unit_catcher - unit_pitcher.upgrade(pierce_attack_upgrade=4)
+                    unit_pitcher.set_atk_upgrades_to_zero()
             column_list.append(inner_dict)
+    unit_catcher.set_def_upgrades_to_zero()
     return column_list
 
 
@@ -53,9 +56,9 @@ for unit_catcher in unit_catchers:
         rows_dict[unit_catcher.get_name() + "+1+1"] = zumbla(
             unit_catcher.upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1))
         rows_dict[unit_catcher.get_name() + "+2+2"] = zumbla(
-            unit_catcher.upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1))
+            unit_catcher.upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2))
         rows_dict[unit_catcher.get_name() + "+3+4"] = zumbla(
-            unit_catcher.upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=2))
+            unit_catcher.upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4))
 
 
     super_dict = {unit_catcher.get_name(): rows_dict}
