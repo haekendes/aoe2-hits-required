@@ -1,0 +1,24 @@
+ - Hinzufügen weiterer Filter+Tabellen
+	- möglich, sobald erste Auswahl getroffen?
+	- Per Hinzufügen-Button
+	- Entfernen, sobald erste Auswahl weg?
+	- stattdessen eine Möglichkeit zur Übersicht über alle initialisierten Tables,
+	- oder Möglichkeit zum Ausblenden des großen Tables, nur initialisierung eines kleinen Tables nach Filter Auswahl <- beste Methode
+
+ - Option zum An- Abschalten eines Match-Spiegels bei Filter Auswahl
+
+ - Json table data abspecken
+	- benötigt evtl keine column names per row
+
+ - Optimierung für Raspberry
+	- Übertragene Daten möglichst gering halten, Tabelle beim Klienten erweitern
+	- Tabelleninfos beim Klienten speichern
+	- Berechnungen nach numpy überführen und Berechnungszeit gegen RAM Nutzung abwägen
+
+TODO:
+
+ - Bonusschadensupgrades
+	- parthian tactics
+	- chieftains
+
+ - frozen column width mit Zeichenanzahl skalieren

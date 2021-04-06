@@ -1,6 +1,4 @@
-import os
-
-from flask import render_template, send_from_directory
+from flask import render_template
 from application.app import app, table_data, column_names
 
 
@@ -11,5 +9,4 @@ def home():
 
 @app.route('/get_table', methods=['GET'])
 def get_table():
-    return {"table": table_data}
-
+    return {"table": table_data, "columns": column_names}

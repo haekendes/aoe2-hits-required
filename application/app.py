@@ -9,24 +9,6 @@ bootstrap = Bootstrap(app)
 app.config.from_object(Config)
 
 
-def set_generic_upgrades(unit):
-    if any(x in unit.armor_classes.keys() for x in (1, 8, 15, 30,)):
-        unit.def_upgrades["+1+1"] = Upgrade(0, 0, 0, 1, 1)
-        unit.def_upgrades["+2+2"] = Upgrade(0, 0, 0, 2, 2)
-        unit.def_upgrades["+3+4"] = Upgrade(0, 0, 0, 3, 4)
-
-    if any(x in unit.armor_classes.keys() for x in (15, 16,)):
-        unit.atk_upgrades["+1"] = Upgrade(0, 0, 1, 0, 0)
-        unit.atk_upgrades["+2"] = Upgrade(0, 0, 2, 0, 0)
-        unit.atk_upgrades["+3"] = Upgrade(0, 0, 3, 0, 0)
-        unit.atk_upgrades["+4"] = Upgrade(0, 0, 4, 0, 0)
-
-    if any(x in unit.armor_classes.keys() for x in (1, 8, 30,)):
-        unit.atk_upgrades["+1"] = Upgrade(0, 1, 0, 0, 0)
-        unit.atk_upgrades["+2"] = Upgrade(0, 2, 0, 0, 0)
-        unit.atk_upgrades["+4"] = Upgrade(0, 4, 0, 0, 0)
-
-
 def zumbla(unit_catcher):
     column_list = []
     for unit_pitcher in unit_pitchers:
@@ -37,12 +19,19 @@ def zumbla(unit_catcher):
             inner_dict[unit_pitcher.get_name() + key] = unit_catcher - unit_pitcher.upgrade(value)
             unit_pitcher.set_atk_upgrades_to_zero()
 
+
         column_list.append(inner_dict)
     return column_list
 
 
 unit_catchers = [cls() for cls in Unit.__subclasses__()]
 unit_pitchers = unit_catchers.copy()
+
+column_names = []
+for unit in unit_catchers:
+    column_names.append(unit.get_name())
+    for key in unit.atk_upgrades.keys():
+        column_names.append(unit.get_name() + key)
 
 table_data = []
 for unit_catcher in unit_catchers:
@@ -55,7 +44,5 @@ for unit_catcher in unit_catchers:
 
     super_dict = {unit_catcher.get_name(): rows_dict}
     table_data.append(super_dict)
-
-column_names = [key for key in next(iter(next(iter(table_data[0].values())).values()))]
 
 from application import routes
