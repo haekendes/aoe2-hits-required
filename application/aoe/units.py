@@ -272,7 +272,10 @@ class ImperialSkirmisher(Unit):
 class HandCannoneer(Unit):
     def __init__(self):
         super().__init__(35, 0, 17, 1, 0, armor_classes=(15,23,), bonus_attack_classes=(1,17,27,), bonus_attack_values=(10,2,1,),
-                         def_upgrades={" (Turks)": Upgrade(hp_upgrade=8.75)})
+                         def_upgrades={" (Turks)": Upgrade(hp_upgrade=8.75),
+                                       "+1+1 (Turks)": Upgrade(hp_upgrade=8.75, melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2 (Turks)": Upgrade(hp_upgrade=8.75, melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4 (Turks)": Upgrade(hp_upgrade=8.75, melee_armor_upgrade=3, pierce_armor_upgrade=4),})
 
 
 class HeavyCavalryArcher(Unit):
@@ -539,11 +542,11 @@ class TrebuchetPacked(Unit):
     def __init__(self):
         super().__init__(150, 0, 200, 2, 8, armor_classes=(20,), displayed_name="Trebuchet (packed)",
                          def_upgrades={"+4+0 (Ironclad)": Upgrade(melee_armor_upgrade=4)},
-                         atk_upgrades={"+1", Upgrade(pierce_attack_upgrade=1)})
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1)})
 
 
 class TrebuchetUnpacked(Unit):
     def __init__(self):
         super().__init__(150, 0, 200, 1, 150, armor_classes=(20,17,), displayed_name="Trebuchet (unpacked)",
                          def_upgrades={"+4+0 (Ironclad)": Upgrade(melee_armor_upgrade=4)},
-                         atk_upgrades={"+1", Upgrade(pierce_attack_upgrade=1)})
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1)})

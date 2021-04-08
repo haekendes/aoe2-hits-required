@@ -8,10 +8,7 @@ fetchData();
 
 function initSite() {
   setColumnData();
-  //console.log(columnNames);
   setTableData();
-  console.log(fetchedData['table']);
-  console.log(tableData)
   initializeTable(columnNames, tableData);
 
   setSelectData(columnNames);
@@ -32,10 +29,6 @@ $(document).ready(function() {
   });
   $('.select-catcher').on('select2:select', function (e) {
     select1 = e.params.data;
-    console.log("Catcher: Selected " + select1['text']);
-    //console.log(data);
-    //console.log(columnNames[data['id']]);
-    //console.log(Object.values(fetchedData['table'][data['id']])[0]);
     tableData = [];
     innerTableData(Object.values(fetchedData['table'][select1['id']])[0]);
     initializeTable(columnNames, tableData);
@@ -59,16 +52,18 @@ $(document).ready(function() {
 });
 }
 
-function innerTableData(objDict) {
-  for(e in objDict) {
-    values = {}
-    for (i of objDict[e]) {
-      for (j of Object.entries(i)) {
-        values[j[0]] = j[1];
+function innerTableData(objDict) { //receives dict of unit rows
+  for (bla of objDict) {
+    for(e in bla) {
+      values = {}
+      for (i of bla[e]) {
+        for (j of Object.entries(i)) {
+          values[j[0]] = j[1]; //column_name: numerical_value
+        }
       }
+      values.empty = e;
+      tableData.push(values);
     }
-    values.empty = e;
-    tableData.push(values);
   }
 }
 
@@ -82,14 +77,13 @@ function setTableData() {
 }
 
 function setSingleColumnData(data) {
-  console.log(data)
-  obj = Object.values(Object.values(Object.values(fetchedData['table'])[0])[0])[0][data['id']];
+  obj = Object.values(Object.values(Object.values(fetchedData['table'])[0])[0][0])[0][data['id']];
   columnNames = (Object.keys(obj));
 }
 
 function setColumnData() {
   columnNames = []
-  objList = Object.values(Object.values(Object.values(fetchedData['table'])[0])[0])[0];
+  objList = Object.values(Object.values(Object.values(Object.values(fetchedData['table'])[0])[0])[0])[0];
   for (e of objList) {
     columnNames = columnNames.concat(Object.keys(e));
   }
@@ -122,7 +116,31 @@ function initializeTable(colNames, data) {
     };
   
     grid = new Slick.Grid(tableElement, data, columns, options);
+    //grid.getColumns()[0].width = 250
+    //console.log(grid.getColumns()[0])
+    //grid.invalidate();
   }
+
+function combineData(data) {
+  for (e in data['table']) {
+    innerTable = Object.values(data['table'][e])[0];
+    for (bla of innerTable) {
+      for(e in bla) {
+        var index = 0;
+        bla[e].forEach(function(value, i) {
+          var temp_obj = {}
+          for(number of value) {
+            temp_obj[data['columns'][index]] = number;
+            index += 1;
+          }
+          bla[e][i] = temp_obj;
+        })
+      }
+    }
+  }
+
+  return data;
+}
 
 function fetchData() {
     return fetch('/get_table', {
@@ -137,7 +155,7 @@ function fetchData() {
     
           // Examine the text in the response
           response.json().then(function(data) {
-            fetchedData = data;
+            fetchedData = combineData(data);
             initSite();
           });
         }
