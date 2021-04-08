@@ -1,6 +1,4 @@
 from application.aoe.units import Unit
-import pandas as pd
-import matplotlib.pyplot as plt
 
 
 unit_catchers = [cls() for cls in Unit.__subclasses__()]
