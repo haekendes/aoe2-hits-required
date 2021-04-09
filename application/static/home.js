@@ -1,10 +1,15 @@
-var fetchedData,
+var fetchedData = JSON.parse(localStorage.getItem('fetchedData')),
     columnNames,
     tableData,
     selectData,
     tableElement = document.getElementById("myGrid");
 
-fetchData();
+if (fetchedData === null || version != localStorage.getItem('version')) {
+  fetchData()
+}
+else {
+  initSite()
+}
 
 function initSite() {
   setColumnData();
@@ -156,6 +161,8 @@ function fetchData() {
           // Examine the text in the response
           response.json().then(function(data) {
             fetchedData = combineData(data);
+            localStorage.setItem('fetchedData', JSON.stringify(fetchedData));
+            localStorage.setItem('version', version)
             initSite();
           });
         }
