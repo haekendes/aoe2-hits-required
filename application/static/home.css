@@ -16,10 +16,10 @@
 
 .slick-cell, .slick-header-column {
     text-align: center;
+    overflow: visible !important;
 }
 .slick-cell {
     border: 1px solid aliceblue;
-    
 }
 
 .slick-header {
@@ -36,6 +36,7 @@
     align-items: center;
     border-right: 1px solid silver;
 }
+
 
 .slick-header-column {
     background: #eaeeee;

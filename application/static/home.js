@@ -1,66 +1,25 @@
-var fetchedData = JSON.parse(localStorage.getItem('fetchedData')),
-    columnNames,
-    tableData,
-    selectData,
-    tableElement = document.getElementById("myGrid");
+var completeData = JSON.parse(localStorage.getItem('fetchedData')),
+  columnNames,
+  tableData;
 
-if (fetchedData === null || version != localStorage.getItem('version')) {
-  fetchData()
-}
+//if (fetchedData === null || version != localStorage.getItem('version')) {
+  fetchData();
+/*}
 else {
-  initSite()
+  initSite();
 }
-
+*/
 function initSite() {
-  setColumnData();
+  setColumnNames();
   setTableData();
-  initializeTable(columnNames, tableData);
-
-  setSelectData(columnNames);
+  initTable(columnNames, tableData);
   initSelectors();
-}
-
-function initSelectors() {
-$(document).ready(function() {
-  $('.select-catcher').select2({
-    placeholder: 'Choose a unit getting hit',
-    allowClear: true,
-    data: selectData
-  });
-  $('.select-pitcher').select2({
-    placeholder: 'Choose a hitting unit',
-    allowClear: true,
-    data: selectData
-  });
-  $('.select-catcher').on('select2:select', function (e) {
-    select1 = e.params.data;
-    tableData = [];
-    innerTableData(Object.values(fetchedData['table'][select1['id']])[0]);
-    initializeTable(columnNames, tableData);
-  });
-  $('.select-catcher').on('select2:unselect', function (e) {
-    console.log("Catcher: unselected");
-    setTableData()
-    initializeTable(columnNames, tableData);
-  });
-  $('.select-pitcher').on('select2:select', function (e) {
-    select2 = e.params.data;
-    console.log("Pitcher: Selected " + select2['text']);
-    setSingleColumnData(select2);
-    initializeTable(columnNames, tableData);
-  });
-  $('.select-pitcher').on('select2:unselect', function (e) {
-    console.log("Pitcher: unselected");
-    setColumnData()
-    initializeTable(columnNames, tableData);
-  });
-});
 }
 
 function innerTableData(objDict) { //receives dict of unit rows
   for (bla of objDict) {
     for(e in bla) {
-      values = {}
+      const values = {}
       for (i of bla[e]) {
         for (j of Object.entries(i)) {
           values[j[0]] = j[1]; //column_name: numerical_value
@@ -74,100 +33,132 @@ function innerTableData(objDict) { //receives dict of unit rows
 
 function setTableData() {
   tableData = []
-  for (e in fetchedData['table']) {
-    innerTableData(Object.values(fetchedData['table'][e])[0]);
+  for (e in completeData['table']) {
+    innerTableData(Object.values(completeData['table'][e])[0]);
     tableData.push("");
   }
   
 }
 
-function setSingleColumnData(data) {
-  obj = Object.values(Object.values(Object.values(fetchedData['table'])[0])[0][0])[0][data['id']];
-  columnNames = (Object.keys(obj));
+function getSingleColumnData(data) {
+  return Object.keys(Object.values(Object.values(Object.values(completeData['table'])[0])[0][0])[0][data['id']]);
 }
 
-function setColumnData() {
+function setColumnNames() {
   columnNames = []
-  objList = Object.values(Object.values(Object.values(Object.values(fetchedData['table'])[0])[0])[0])[0];
+  const objList = Object.values(Object.values(Object.values(Object.values(completeData['table'])[0])[0])[0])[0];
   for (e of objList) {
     columnNames = columnNames.concat(Object.keys(e));
   }
 }
 
+function initTable(colNames, data) {
+  const columns = [{id: "empty", name: "", field: "empty", width: 200}]
+  for (e of colNames) {
+    columns.push({id: e, name: e, field: e, width: 175});
+  };
+  
+
+  const options = {
+    enableCellNavigation: true,
+    enableColumnReorder: false,
+    frozenColumn: 0,
+  };
+
+  const grid = new Slick.Grid(document.getElementById("myGrid"), data, columns, options);
+  // TODO autosize column
+  /*
+  grid.getColumns()[0].width = 250
+  console.log(grid.getColumns()[0])
+  grid.invalidate();
+  */
+}
+
 function setSelectData(data) {
-  selectData = []
-  index = 0;
-  for (e in fetchedData['table']) {
+  const selectData = [];
+  let index = 0;
+  for (e in completeData['table']) {
     selectData.push({
       id: index,
-      text: Object.keys(fetchedData['table'][e])[0]
+      text: Object.keys(completeData['table'][e])[0]
     });
     index++;
   }
+  return selectData;
 }
 
-function initializeTable(colNames, data) {
-    var grid;
-    var columns = [{id: "empty", name: "", field: "empty", minWidth: 200}]
-    for (e of colNames) {
-      columns.push({id: e, name: e, field: e, minWidth: 175});
-    };
-    
-  
-    var options = {
-      enableCellNavigation: true,
-      enableColumnReorder: false,
-      frozenColumn: 0,
-    };
-  
-    grid = new Slick.Grid(tableElement, data, columns, options);
-    //grid.getColumns()[0].width = 250
-    //console.log(grid.getColumns()[0])
-    //grid.invalidate();
-  }
+function initSelectors() {
+  const selectData = setSelectData(columnNames);
 
-function combineData(data) {
+  $(document).ready(function() {
+
+    initSelector(selectData, '.select-catcher', 'Choose a unit getting hit', 
+    function (e) {
+      tableData = [];
+      innerTableData(Object.values(completeData['table'][e.params.data['id']])[0]);
+      initTable(columnNames, tableData);
+    },
+    function (e) {
+      setTableData()
+      initTable(columnNames, tableData);
+    });
+
+    initSelector(selectData, '.select-pitcher', 'Choose a hitting unit', 
+    function (e) {
+      initTable(getSingleColumnData(e.params.data), tableData);
+    },
+    function (e) {
+      initTable(columnNames, tableData);
+    });
+  });
+}
+
+function initSelector(selectData, className, placeholderText, onSelect, onUnselect) {
+  $(className).select2({
+    placeholder: placeholderText,
+    allowClear: true,
+    data: selectData
+  });
+  $(className).on('select2:select', onSelect);
+  $(className).on('select2:unselect', onUnselect);
+}
+
+async function fetchData() {
+  try {
+    const response = await fetch('/get_table', {
+      method: 'GET',
+    });
+    if (response.status !== 200) {
+      console.log('Looks like there was a problem. Status Code: ' +
+        response.status);
+      return;
+    }
+    response.json().then(function (data) {
+      completeData = combineColumnsWithTable(data);
+      localStorage.setItem('fetchedData', JSON.stringify(completeData));
+      localStorage.setItem('version', version);
+      initSite();
+    });
+  } catch (err) {
+    console.log('Fetch Error :-S', err);
+  }
+}
+
+function combineColumnsWithTable(data) {
   for (e in data['table']) {
-    innerTable = Object.values(data['table'][e])[0];
-    for (bla of innerTable) {
-      for(e in bla) {
+    for (bla of Object.values(data['table'][e])[0]) {
+      for(k in bla) {
         var index = 0;
-        bla[e].forEach(function(value, i) {
+        bla[k].forEach(function(value, i) {
           var temp_obj = {}
           for(number of value) {
             temp_obj[data['columns'][index]] = number;
-            index += 1;
+            index++;
           }
-          bla[e][i] = temp_obj;
+          bla[k][i] = temp_obj;
         })
       }
     }
   }
-
   return data;
-}
-
-function fetchData() {
-    return fetch('/get_table', {
-        method: 'GET',
-    }).then(
-        function(response) {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-    
-          // Examine the text in the response
-          response.json().then(function(data) {
-            fetchedData = combineData(data);
-            localStorage.setItem('fetchedData', JSON.stringify(fetchedData));
-            localStorage.setItem('version', version)
-            initSite();
-          });
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
 }
