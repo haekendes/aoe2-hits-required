@@ -112,7 +112,37 @@ def zip_class_values(armor_classes, armor_class_values):
 
 class Militia(Unit):
     def __init__(self):
-        super().__init__(40, 4, 0, 0, 1, armor_classes=(1,))
+        super().__init__(40, 4, 0, 0, 1, armor_classes=(1,),
+                         atk_upgrades={"+3 (Burmese)": Upgrade(melee_attack_upgrade=3),
+                                       "+5 (Burmese)": Upgrade(melee_attack_upgrade=5),
+                                       "+7 (Burmese)": Upgrade(melee_attack_upgrade=7),
+                                       "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
+                                       "+2+5 (Malians)": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=5),
+                                       "+3+7 (Malians)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=7),
+                                       "+4+2 (Teutons)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=2),
+                                       "+5+4 (Teutons)": Upgrade(melee_armor_upgrade=5, pierce_armor_upgrade=4),
+                                       "+10%HP (Vikings)": Upgrade(hp_upgrade=4),
+                                       "+10%HP+1+1 (Vikings)": Upgrade(hp_upgrade=4, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+10%HP+2+2 (Vikings)": Upgrade(hp_upgrade=4, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+10%HP+3+4 (Vikings)": Upgrade(hp_upgrade=4, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+15%HP (Vikings)": Upgrade(hp_upgrade=6),
+                                       "+15%HP+1+1 (Vikings)": Upgrade(hp_upgrade=6, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+15%HP+2+2 (Vikings)": Upgrade(hp_upgrade=6, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+15%HP+3+4 (Vikings)": Upgrade(hp_upgrade=6, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+20%HP (Vikings)": Upgrade(hp_upgrade=8),
+                                       "+20%HP+1+1 (Vikings)": Upgrade(hp_upgrade=8, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+20%HP+2+2 (Vikings)": Upgrade(hp_upgrade=8, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+20%HP+3+4 (Vikings)": Upgrade(hp_upgrade=8, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),})
 
 
 class Archer(Unit):
@@ -127,13 +157,50 @@ class Skirmisher(Unit):
 
 class Scout(Unit):
     def __init__(self):
-        super().__init__(45, 5, 0, 0, 2, armor_classes=(8,), bonus_attack_classes=(25,), bonus_attack_values=(6,))
+        super().__init__(45, 5, 0, 0, 2, armor_classes=(8,), bonus_attack_classes=(25,), bonus_attack_values=(6,),
+                         displayed_name="Scout Cavalry",
+                         atk_upgrades={"+5 (Farimba)": Upgrade(melee_attack_upgrade=5),
+                                       "+6 (Farimba)": Upgrade(melee_attack_upgrade=6),
+                                       "+7 (Farimba)": Upgrade(melee_attack_upgrade=7)},
+                         def_upgrades={"+4+5 (SilkArmor)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=5),
+                                       "+Bl.+4+5 (SilkArmor)": Upgrade(hp_upgrade=20, melee_armor_upgrade=4,
+                                                                       pierce_armor_upgrade=5)})
 
 
 class ManAtArms(Unit):
     def __init__(self):
         super().__init__(45, 6, 0, 0, 1, armor_classes=(1,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
-                         displayed_name="Man-at-Arms")
+                         displayed_name="Man-at-Arms",
+                         atk_upgrades={"+3 (Burmese)": Upgrade(melee_attack_upgrade=3),
+                                       "+5 (Burmese)": Upgrade(melee_attack_upgrade=5),
+                                       "+7 (Burmese)": Upgrade(melee_attack_upgrade=7),
+                                       "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
+                                       "+2+5 (Malians)": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=5),
+                                       "+3+7 (Malians)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=7),
+                                       "+4+2 (Teutons)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=2),
+                                       "+5+4 (Teutons)": Upgrade(melee_armor_upgrade=5, pierce_armor_upgrade=4),
+                                       "+10%HP (Vikings)": Upgrade(hp_upgrade=4.5),
+                                       "+10%HP+1+1 (Vikings)": Upgrade(hp_upgrade=4.5, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+10%HP+2+2 (Vikings)": Upgrade(hp_upgrade=4.5, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+10%HP+3+4 (Vikings)": Upgrade(hp_upgrade=4.5, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+15%HP (Vikings)": Upgrade(hp_upgrade=6.75),
+                                       "+15%HP+1+1 (Vikings)": Upgrade(hp_upgrade=6.75, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+15%HP+2+2 (Vikings)": Upgrade(hp_upgrade=6.75, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+15%HP+3+4 (Vikings)": Upgrade(hp_upgrade=6.75, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+20%HP (Vikings)": Upgrade(hp_upgrade=9),
+                                       "+20%HP+1+1 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+20%HP+2+2 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+20%HP+3+4 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),})
 
 
 class Spearman(Unit):
@@ -145,7 +212,19 @@ class Spearman(Unit):
 class EagleScout(Unit):
     def __init__(self):
         super().__init__(50, 4, 0, 0, 2, armor_classes=(1, 29), bonus_attack_classes=(25, 20, 8, 30, 16,),
-                         bonus_attack_values=(8, 3, 2, 1, 1,), displayed_name="Eagle Scout")
+                         bonus_attack_values=(8, 3, 2, 1, 1,), displayed_name="Eagle Scout",
+                         atk_upgrades={"+5 (GarlandWars": Upgrade(melee_attack_upgrade=5),
+                                       "+6 (GarlandWars": Upgrade(melee_attack_upgrade=6),
+                                       "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+ElDorado": Upgrade(hp_upgrade=40),
+                                       "+ElDorado+1+1": Upgrade(hp_upgrade=40, melee_armor_upgrade=1,
+                                                                pierce_armor_upgrade=1),
+                                       "+ElDorado+2+2": Upgrade(hp_upgrade=40, melee_armor_upgrade=2,
+                                                                pierce_armor_upgrade=2),
+                                       "+ElDorado+3+4": Upgrade(hp_upgrade=40, melee_armor_upgrade=3,
+                                                                pierce_armor_upgrade=4),
+                                       "+4+6 (FabricShields)": Upgrade(hp_upgrade=40, melee_armor_upgrade=4,
+                                                                       pierce_armor_upgrade=6), })
 
 
 class Villager(Unit):
@@ -192,20 +271,22 @@ class CavalryArcher(Unit):
         super().__init__(50, 0, 6, 0, 0, armor_classes=(15, 28, 8,), bonus_attack_classes=(27,),
                          bonus_attack_values=(2,), displayed_name="Cavalry Archer",
                          def_upgrades={"+4+6": Upgrade(0, 0, 0, 4, 6), "+Bl.+4+6": Upgrade(20, 0, 0, 4, 6),
-                                       "+5+7 (SilkArmor)": Upgrade(0, 0, 0, 5, 7), "+Bl.+5+7 (SilkArmor)": Upgrade(20, 0, 0, 5, 7),
+                                       "+5+7 (SilkArmor)": Upgrade(0, 0, 0, 5, 7),
+                                       "+Bl.+5+7 (SilkArmor)": Upgrade(20, 0, 0, 5, 7),
                                        " (Vietnamese&Franks)": Upgrade(hp_upgrade=10),
-                                       "+1+1 (Vietnamese&Franks)": Upgrade(hp_upgrade=10, melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+1+1 (Vietnamese&Franks)": Upgrade(hp_upgrade=10, melee_armor_upgrade=1,
+                                                                           pierce_armor_upgrade=1),
                                        "+2+2 (Vietnamese&Franks)": Upgrade(hp_upgrade=10, melee_armor_upgrade=2,
                                                                            pierce_armor_upgrade=2),
                                        "+3+4 (Vietnamese)": Upgrade(hp_upgrade=10, melee_armor_upgrade=3,
-                                                                           pierce_armor_upgrade=4),
+                                                                    pierce_armor_upgrade=4),
                                        "+Bl. (Vietnamese)": Upgrade(hp_upgrade=30),
                                        "+Bl.+1+1 (Vietnamese)": Upgrade(hp_upgrade=30, melee_armor_upgrade=1,
-                                                                           pierce_armor_upgrade=1),
+                                                                        pierce_armor_upgrade=1),
                                        "+Bl.+2+2 (Vietnamese)": Upgrade(hp_upgrade=30, melee_armor_upgrade=2,
-                                                                           pierce_armor_upgrade=2),
+                                                                        pierce_armor_upgrade=2),
                                        "+Bl.+3+4 (Vietnamese)": Upgrade(hp_upgrade=30, melee_armor_upgrade=3,
-                                                                    pierce_armor_upgrade=4),
+                                                                        pierce_armor_upgrade=4),
                                        "+Sipahi+Bl.": Upgrade(40, 0, 0, 0, 0),
                                        "+Sipahi+Bl.+1+1": Upgrade(40, 0, 0, 1, 1),
                                        "+Sipahi+Bl.+2+2": Upgrade(40, 0, 0, 2, 2),
@@ -247,25 +328,100 @@ class Genitour(Unit):
 class LongSword(Unit):
     def __init__(self):
         super().__init__(60, 9, 0, 0, 1, armor_classes=(1,), bonus_attack_classes=(29,), bonus_attack_values=(6,),
-                         displayed_name="Long Swordsman")
+                         displayed_name="Long Swordsman",
+                         atk_upgrades={"+3 (Burmese)": Upgrade(melee_attack_upgrade=3),
+                                       "+5 (Burmese)": Upgrade(melee_attack_upgrade=5),
+                                       "+7 (Burmese)": Upgrade(melee_attack_upgrade=7),
+                                       "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
+                                       "+2+5 (Malians)": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=5),
+                                       "+3+7 (Malians)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=7),
+                                       "+4+2 (Teutons)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=2),
+                                       "+5+4 (Teutons)": Upgrade(melee_armor_upgrade=5, pierce_armor_upgrade=4),
+                                       "+15%HP (Vikings)": Upgrade(hp_upgrade=9),
+                                       "+15%HP+1+1 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+15%HP+2+2 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+15%HP+3+4 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+20%HP (Vikings)": Upgrade(hp_upgrade=12),
+                                       "+20%HP+1+1 (Vikings)": Upgrade(hp_upgrade=12, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+20%HP+2+2 (Vikings)": Upgrade(hp_upgrade=12, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+20%HP+3+4 (Vikings)": Upgrade(hp_upgrade=12, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),})
 
 
 class Pikeman(Unit):
     def __init__(self):
         super().__init__(55, 4, 0, 0, 0, armor_classes=(1, 27,), bonus_attack_classes=(8, 5, 30, 16, 34, 35, 29,),
-                         bonus_attack_values=(22, 25, 18, 16, 16, 11, 1))
+                         bonus_attack_values=(22, 25, 18, 16, 16, 11, 1),
+                         atk_upgrades={"+3 (Burmese)": Upgrade(melee_attack_upgrade=3),
+                                       "+5 (Burmese)": Upgrade(melee_attack_upgrade=5),
+                                       "+7 (Burmese)": Upgrade(melee_attack_upgrade=7),
+                                       "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
+                                       "+2+5 (Malians)": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=5),
+                                       "+3+7 (Malians)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=7),
+                                       "+4+2 (Teutons)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=2),
+                                       "+5+4 (Teutons)": Upgrade(melee_armor_upgrade=5, pierce_armor_upgrade=4),
+                                       "+15%HP (Vikings)": Upgrade(hp_upgrade=8.25),
+                                       "+15%HP+1+1 (Vikings)": Upgrade(hp_upgrade=8.25, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+15%HP+2+2 (Vikings)": Upgrade(hp_upgrade=8.25, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+15%HP+3+4 (Vikings)": Upgrade(hp_upgrade=8.25, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+20%HP (Vikings)": Upgrade(hp_upgrade=11),
+                                       "+20%HP+1+1 (Vikings)": Upgrade(hp_upgrade=11, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+20%HP+2+2 (Vikings)": Upgrade(hp_upgrade=11, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+20%HP+3+4 (Vikings)": Upgrade(hp_upgrade=11, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       })
 
 
 class EagleWarrior(Unit):
     def __init__(self):
         super().__init__(55, 7, 0, 0, 3, armor_classes=(1, 29,), bonus_attack_classes=(25, 20, 8, 30, 16, 34,),
-                         bonus_attack_values=(8, 3, 3, 2, 1, 1,), displayed_name="Eagle Warrior")
+                         bonus_attack_values=(8, 3, 3, 2, 1, 1,), displayed_name="Eagle Warrior",
+                         atk_upgrades={"+5 (GarlandWars": Upgrade(melee_attack_upgrade=5),
+                                       "+6 (GarlandWars": Upgrade(melee_attack_upgrade=6),
+                                       "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+ElDorado": Upgrade(hp_upgrade=40),
+                                       "+ElDorado+1+1": Upgrade(hp_upgrade=40, melee_armor_upgrade=1,
+                                                                pierce_armor_upgrade=1),
+                                       "+ElDorado+2+2": Upgrade(hp_upgrade=40, melee_armor_upgrade=2,
+                                                                pierce_armor_upgrade=2),
+                                       "+ElDorado+3+4": Upgrade(hp_upgrade=40, melee_armor_upgrade=3,
+                                                                pierce_armor_upgrade=4),
+                                       "+4+6 (FabricShields)": Upgrade(hp_upgrade=40, melee_armor_upgrade=4,
+                                                                       pierce_armor_upgrade=6), })
 
 
 class LightCavalry(Unit):
     def __init__(self):
         super().__init__(60, 7, 0, 0, 2, armor_classes=(8,), bonus_attack_classes=(25,), bonus_attack_values=(10,),
-                         displayed_name="Light Cavalry")
+                         displayed_name="Light Cavalry",
+                         atk_upgrades={"+5 (Farimba)": Upgrade(melee_attack_upgrade=5),
+                                       "+6 (Farimba)": Upgrade(melee_attack_upgrade=6),
+                                       "+7 (Farimba)": Upgrade(melee_attack_upgrade=7)},
+                         def_upgrades={"+4+5 (SilkArmor)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=5),
+                                       "+Bl.+4+5 (SilkArmor)": Upgrade(hp_upgrade=20, melee_armor_upgrade=4,
+                                                                       pierce_armor_upgrade=5),
+                                       " (Mongols)": Upgrade(hp_upgrade=18),
+                                       "+1+1 (Mongols)": Upgrade(hp_upgrade=18, melee_armor_upgrade=1,
+                                                                 pierce_armor_upgrade=1),
+                                       "+2+2 (Mongols)": Upgrade(hp_upgrade=18, melee_armor_upgrade=2,
+                                                                 pierce_armor_upgrade=2),
+                                       "+Bl. (Mongols)": Upgrade(hp_upgrade=38),
+                                       "+Bl.+1+1 (Mongols)": Upgrade(hp_upgrade=38, melee_armor_upgrade=1,
+                                                                     pierce_armor_upgrade=1),
+                                       "+Bl.+2+2 (Mongols)": Upgrade(hp_upgrade=38, melee_armor_upgrade=2,
+                                                                     pierce_armor_upgrade=2)})
 
 
 class Knight(Unit):
@@ -353,7 +509,8 @@ class HeavyCavalryArcher(Unit):
         super().__init__(60, 0, 7, 1, 0, armor_classes=(15, 28, 8,), bonus_attack_classes=(27,),
                          bonus_attack_values=(2,), displayed_name="Heavy Cavalry Archer",
                          def_upgrades={"+4+6": Upgrade(0, 0, 0, 4, 6), "+Bl.+4+6": Upgrade(20, 0, 0, 4, 6),
-                                       "+5+7 (SilkArmor)": Upgrade(0,0,0,5,7), "+Bl.+5+7 (SilkArmor)": Upgrade(20, 0, 0, 5, 7),
+                                       "+5+7 (SilkArmor)": Upgrade(0, 0, 0, 5, 7),
+                                       "+Bl.+5+7 (SilkArmor)": Upgrade(20, 0, 0, 5, 7),
                                        " (Vietnamese&Franks)": Upgrade(hp_upgrade=12),
                                        "+1+1 (Vietnamese&Franks)": Upgrade(hp_upgrade=12, melee_armor_upgrade=1,
                                                                            pierce_armor_upgrade=1),
@@ -414,9 +571,7 @@ class TwoHandedSwordsman(Unit):
                                        "+5 (Burmese)": Upgrade(melee_attack_upgrade=5),
                                        "+7 (Burmese)": Upgrade(melee_attack_upgrade=7),
                                        "+8 (GarlandWars": Upgrade(melee_attack_upgrade=8)},
-                         def_upgrades={"+8+4 (Bagains)": Upgrade(melee_armor_upgrade=8, pierce_armor_upgrade=4),
-                                       "+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
-                                       "+1+4 (Malians)": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=4),
+                         def_upgrades={"+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
                                        "+2+5 (Malians)": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=5),
                                        "+3+7 (Malians)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=7),
                                        "+4+2 (Teutons)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=2),
@@ -427,7 +582,8 @@ class TwoHandedSwordsman(Unit):
                                        "+2+2 (Vikings)": Upgrade(hp_upgrade=12, melee_armor_upgrade=2,
                                                                  pierce_armor_upgrade=2),
                                        "+3+4 (Vikings)": Upgrade(hp_upgrade=12, melee_armor_upgrade=3,
-                                                                 pierce_armor_upgrade=4), })
+                                                                 pierce_armor_upgrade=4),
+                                       "+8+4 (Bagains)": Upgrade(melee_armor_upgrade=8, pierce_armor_upgrade=4), })
 
 
 class Champion(Unit):

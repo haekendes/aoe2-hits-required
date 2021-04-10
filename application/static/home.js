@@ -105,9 +105,11 @@ function initSelectors() {
 
     initSelector(selectData, '.select-pitcher', 'Choose a hitting unit', 
     function (e) {
-      initTable(getSingleColumnData(e.params.data), tableData);
+      columnNames = getSingleColumnData(e.params.data);
+      initTable(columnNames, tableData);
     },
     function (e) {
+      setColumnNames();
       initTable(columnNames, tableData);
     });
   });
