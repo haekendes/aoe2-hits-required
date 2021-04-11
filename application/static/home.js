@@ -1,6 +1,7 @@
 var completeData = JSON.parse(localStorage.getItem('fetchedData')),
   columnNames,
-  tableData;
+  tableData,
+  grid;
 
 //if (fetchedData === null || version != localStorage.getItem('version')) {
   fetchData();
@@ -16,8 +17,8 @@ function initSite() {
   initSelectors();
 }
 
-function innerTableData(objDict) { //receives dict of unit rows
-  for (bla of objDict) {
+function setRowData(objList) { //receives list of unit rows
+  for (bla of objList) {
     for(e in bla) {
       const values = {}
       for (i of bla[e]) {
@@ -34,7 +35,7 @@ function innerTableData(objDict) { //receives dict of unit rows
 function setTableData() {
   tableData = []
   for (e in completeData['table']) {
-    innerTableData(Object.values(completeData['table'][e])[0]);
+    setRowData(Object.values(completeData['table'][e])[0]);
     tableData.push("");
   }
   
@@ -65,7 +66,7 @@ function initTable(colNames, data) {
     frozenColumn: 0,
   };
 
-  const grid = new Slick.Grid(document.getElementById("myGrid"), data, columns, options);
+  grid = new Slick.Grid(document.getElementById("myGrid"), data, columns, options);
   // TODO autosize column
   /*
   grid.getColumns()[0].width = 250
@@ -95,22 +96,36 @@ function initSelectors() {
     initSelector(selectData, '.select-catcher', 'Choose a unit getting hit', 
     function (e) {
       tableData = [];
-      innerTableData(Object.values(completeData['table'][e.params.data['id']])[0]);
-      initTable(columnNames, tableData);
+      setRowData(Object.values(completeData['table'][e.params.data['id']])[0]);
+      //initTable(columnNames, tableData);
+      grid.setData(tableData, true);
+      grid.invalidate();
     },
     function (e) {
       setTableData()
-      initTable(columnNames, tableData);
+      //initTable(columnNames, tableData);
+      grid.setData(tableData, true);
+      grid.invalidate();
     });
 
     initSelector(selectData, '.select-pitcher', 'Choose a hitting unit', 
     function (e) {
       columnNames = getSingleColumnData(e.params.data);
-      initTable(columnNames, tableData);
+      //initTable(columnNames, tableData);
+      const columns = [{id: "empty", name: "", field: "empty", width: 200}]
+      for (e of columnNames) {
+        columns.push({id: e, name: e, field: e, width: 175});
+      };
+      grid.setColumns(columns);
     },
     function (e) {
       setColumnNames();
-      initTable(columnNames, tableData);
+      //initTable(columnNames, tableData);
+      const columns = [{id: "empty", name: "", field: "empty", width: 200}]
+      for (e of columnNames) {
+        columns.push({id: e, name: e, field: e, width: 175});
+      };
+      grid.setColumns(columns);
     });
   });
 }
