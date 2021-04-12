@@ -4,6 +4,8 @@
     border-radius: 4px;
     font-family: Calibri;
     font-size: 1.4em;
+    width:100%;
+    height:62.75vh;
 }
 
 .slick-row {

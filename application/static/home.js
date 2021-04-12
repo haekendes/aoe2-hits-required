@@ -17,6 +17,61 @@ function initSite() {
   initSelectors();
 }
 
+function charts(columns, data) {
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    let dataTable = new google.visualization.DataTable();
+    dataTable.addColumn('string', 'Element');
+    for (e of columns) {
+      dataTable.addColumn("number", e);
+    }
+    for (let e of data) {
+      let row = [e.empty];
+      for (const [key, value] of Object.entries(e)) {
+        if (columns.includes(key)) {
+          row.push(value);
+        }
+      }
+      dataTable.addRow(row);
+    }
+
+    let options = {
+      'height': 500,
+      colors: ['#fadcd1', '#f6c7b6', '#f3b49f','#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300'],
+    };
+
+    // Instantiate and draw the chart.
+    var chart1 = new google.visualization.ScatterChart(document.getElementById('chart1'));
+    chart1.draw(dataTable, options);
+
+    var chart2 = new google.visualization.LineChart(document.getElementById('chart2'));
+    chart2.draw(dataTable, options);
+
+    let dataTable3 = new google.visualization.DataTable();
+    dataTable3.addColumn('string', 'Element');
+    dataTable3.addColumn("number", "Hits");
+    for (let e of data) {
+      for (const [key, value] of Object.entries(e)) {
+        if (columns.includes(key)) {
+          let row = [e.empty];
+          row.push(value);
+          dataTable3.addRow(row);
+        }
+      }
+    }
+
+    let options3 = {
+      'height': 500,
+      colors: ['#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300'],
+    };
+    
+    var chart3 = new google.visualization.Histogram(document.getElementById('chart3'));
+    chart3.draw(dataTable3, options3);
+  }
+}
+
 function setRowData(objList) { //receives list of unit rows
   for (bla of objList) {
     for(e in bla) {
@@ -65,7 +120,6 @@ function initTable(colNames, data) {
     enableColumnReorder: false,
     frozenColumn: 0,
   };
-
   grid = new Slick.Grid(document.getElementById("myGrid"), data, columns, options);
   // TODO autosize column
   /*
@@ -93,22 +147,27 @@ function initSelectors() {
 
   $(document).ready(function() {
 
-    initSelector(selectData, '.select-catcher', 'Choose a unit getting hit', 
+    initSelector(selectData, '#select-catcher', 'Choose a unit getting hit', 
     function (e) {
       tableData = [];
       setRowData(Object.values(completeData['table'][e.params.data['id']])[0]);
       //initTable(columnNames, tableData);
       grid.setData(tableData, true);
       grid.invalidate();
+
+      if($('#select-pitcher').select2('data')[0].text) {
+        charts(columnNames, tableData);
+      }
     },
     function (e) {
-      setTableData()
+      boolSelect1 = false;
+      setTableData();
       //initTable(columnNames, tableData);
       grid.setData(tableData, true);
       grid.invalidate();
     });
 
-    initSelector(selectData, '.select-pitcher', 'Choose a hitting unit', 
+    initSelector(selectData, '#select-pitcher', 'Choose a hitting unit', 
     function (e) {
       columnNames = getSingleColumnData(e.params.data);
       //initTable(columnNames, tableData);
@@ -117,6 +176,10 @@ function initSelectors() {
         columns.push({id: e, name: e, field: e, width: 175});
       };
       grid.setColumns(columns);
+      
+      if($('#select-catcher').select2('data')[0].text) {
+        charts(columnNames, tableData);
+      }
     },
     function (e) {
       setColumnNames();
