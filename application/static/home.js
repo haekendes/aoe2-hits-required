@@ -17,9 +17,21 @@ function initSite() {
   initSelectors();
 }
 
+function hideCharts() {
+  for (e of $('.chart')) {
+    e.style.display = 'none';
+  }
+}
+function showCharts() {
+  for (e of $('.chart')) {
+    e.style.display = 'revert';
+  }
+}
+
 function charts(columns, data) {
   google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(drawChart);
+  showCharts();
 
   function drawChart() {
     let dataTable = new google.visualization.DataTable();
@@ -40,6 +52,14 @@ function charts(columns, data) {
     let options = {
       'height': 500,
       colors: ['#fadcd1', '#f6c7b6', '#f3b49f','#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300'],
+      vAxis: {
+        title: 'Hits required',
+        titleTextStyle: {italic: false, bold: true}
+      },
+      hAxis: {
+        title: 'Armor Upgrades',
+        titleTextStyle: {italic: false, bold: true}
+      },
     };
 
     // Instantiate and draw the chart.
@@ -51,24 +71,47 @@ function charts(columns, data) {
 
     let dataTable3 = new google.visualization.DataTable();
     dataTable3.addColumn('string', 'Element');
-    dataTable3.addColumn("number", "Hits");
+    dataTable3.addColumn("number", "Single Matchup");
+    
     for (let e of data) {
       for (const [key, value] of Object.entries(e)) {
         if (columns.includes(key)) {
-          let row = [e.empty];
+          let row = [e.empty + " | " + key];
           row.push(value);
           dataTable3.addRow(row);
         }
       }
     }
 
-    let options3 = {
-      'height': 500,
-      colors: ['#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300'],
-    };
+    //change options for histogram
+    options['colors']= ['#ec8f6e',];
+    options['vAxis'] = {
+      title: 'Amount of Matchups',
+      titleTextStyle: {italic: false, bold: true}
+    }
+    options['hAxis'] = {
+      title: 'Hits required',
+      titleTextStyle: {italic: false, bold: true}
+    }
+    options['legend'] = {
+      position: 'top',
+      alignment: 'end',
+    }
     
     var chart3 = new google.visualization.Histogram(document.getElementById('chart3'));
-    chart3.draw(dataTable3, options3);
+    chart3.draw(dataTable3, options);
+  }
+}
+
+function getSingleColumnNames(data) {
+  return Object.keys(Object.values(Object.values(Object.values(completeData['table'])[0])[0][0])[0][data['id']]);
+}
+
+function setColumnNames() {
+  columnNames = []
+  const objList = Object.values(Object.values(Object.values(Object.values(completeData['table'])[0])[0])[0])[0];
+  for (e of objList) {
+    columnNames = columnNames.concat(Object.keys(e));
   }
 }
 
@@ -96,37 +139,19 @@ function setTableData() {
   
 }
 
-function getSingleColumnData(data) {
-  return Object.keys(Object.values(Object.values(Object.values(completeData['table'])[0])[0][0])[0][data['id']]);
-}
-
-function setColumnNames() {
-  columnNames = []
-  const objList = Object.values(Object.values(Object.values(Object.values(completeData['table'])[0])[0])[0])[0];
-  for (e of objList) {
-    columnNames = columnNames.concat(Object.keys(e));
-  }
-}
-
 function initTable(colNames, data) {
   const columns = [{id: "empty", name: "", field: "empty", width: 200}]
   for (e of colNames) {
     columns.push({id: e, name: e, field: e, width: 175});
   };
   
-
   const options = {
     enableCellNavigation: true,
     enableColumnReorder: false,
     frozenColumn: 0,
   };
-  grid = new Slick.Grid(document.getElementById("myGrid"), data, columns, options);
-  // TODO autosize column
-  /*
-  grid.getColumns()[0].width = 250
-  console.log(grid.getColumns()[0])
-  grid.invalidate();
-  */
+
+  grid = new Slick.Grid($('#myGrid'), data, columns, options);
 }
 
 function setSelectData(data) {
@@ -151,9 +176,11 @@ function initSelectors() {
     function (e) {
       tableData = [];
       setRowData(Object.values(completeData['table'][e.params.data['id']])[0]);
-      //initTable(columnNames, tableData);
+
+      $('#myGrid').height(tableData.length * 25 + 42).trigger('resize');
+
       grid.setData(tableData, true);
-      grid.invalidate();
+      grid.render();
 
       if($('#select-pitcher').select2('data')[0].text) {
         charts(columnNames, tableData);
@@ -162,15 +189,15 @@ function initSelectors() {
     function (e) {
       boolSelect1 = false;
       setTableData();
-      //initTable(columnNames, tableData);
       grid.setData(tableData, true);
-      grid.invalidate();
+      grid.render();
+
+      hideCharts();
     });
 
     initSelector(selectData, '#select-pitcher', 'Choose a hitting unit', 
     function (e) {
-      columnNames = getSingleColumnData(e.params.data);
-      //initTable(columnNames, tableData);
+      columnNames = getSingleColumnNames(e.params.data);
       const columns = [{id: "empty", name: "", field: "empty", width: 200}]
       for (e of columnNames) {
         columns.push({id: e, name: e, field: e, width: 175});
@@ -183,12 +210,13 @@ function initSelectors() {
     },
     function (e) {
       setColumnNames();
-      //initTable(columnNames, tableData);
       const columns = [{id: "empty", name: "", field: "empty", width: 200}]
       for (e of columnNames) {
         columns.push({id: e, name: e, field: e, width: 175});
       };
       grid.setColumns(columns);
+
+      hideCharts();
     });
   });
 }
