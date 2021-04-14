@@ -28,6 +28,14 @@ function showCharts() {
   }
 }
 
+function addPngDownloadToChart(chart, id, fileName) {
+  google.visualization.events.addListener(chart, 'ready', function () {
+    document.getElementById(id).innerHTML = '<a download='+ fileName +' href="'+ chart.getImageURI() + '"><i class="bi bi-card-image"></i><i class="bi bi-download"></i></a>';
+    document.getElementById(id).title = "Download chart as png";
+    document.getElementById(id).classList.add("png-download");
+  });
+}
+
 function charts(columns, data) {
   google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(drawChart);
@@ -60,13 +68,19 @@ function charts(columns, data) {
         title: 'Armor Upgrades',
         titleTextStyle: {italic: false, bold: true}
       },
+      explorer: {
+        zoomDelta: 1.3,
+      },
+      selectionMode: 'multiple',
     };
 
     // Instantiate and draw the chart.
     var chart1 = new google.visualization.ScatterChart(document.getElementById('chart1'));
+    addPngDownloadToChart(chart1, "chart1-png-download", $('#select-catcher').select2('data')[0].text+"-"+$('#select-pitcher').select2('data')[0].text+"-scatter-chart.png");
     chart1.draw(dataTable, options);
 
     var chart2 = new google.visualization.LineChart(document.getElementById('chart2'));
+    addPngDownloadToChart(chart2, "chart2-png-download", $('#select-catcher').select2('data')[0].text+"-"+$('#select-pitcher').select2('data')[0].text+"-line-chart.png");
     chart2.draw(dataTable, options);
 
     let dataTable3 = new google.visualization.DataTable();
@@ -93,12 +107,10 @@ function charts(columns, data) {
       title: 'Hits required',
       titleTextStyle: {italic: false, bold: true}
     }
-    options['legend'] = {
-      position: 'top',
-      alignment: 'end',
-    }
+    
     
     var chart3 = new google.visualization.Histogram(document.getElementById('chart3'));
+    addPngDownloadToChart(chart3, "histogram-png-download", $('#select-catcher').select2('data')[0].text+"-"+$('#select-pitcher').select2('data')[0].text+"-histogram.png");
     chart3.draw(dataTable3, options);
   }
 }

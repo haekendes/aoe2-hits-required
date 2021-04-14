@@ -8,6 +8,21 @@
     height:62.75vh;
 }
 
+.png-download {
+    cursor: pointer;
+    height: 71px;
+    padding-right: 10%;
+}
+
+.bi {
+    font-size: 2rem; 
+    color: #ec8f6e;
+    position: absolute;
+}
+.bi-download {
+    margin-top: 23px;
+}
+
 .slick-row {
     outline: 1px solid #eee;
 }
