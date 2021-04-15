@@ -17,7 +17,7 @@ summary {
     height: 48px;
     display: flex;
     flex-direction: row-reverse;
-    padding-left: 100%;
+    margin-left: auto;
 }
 summary:focus {
     outline: 0px;
@@ -27,13 +27,11 @@ p {
 }
 
 .chart-info {
-    cursor: pointer;
     height: 48px;
     margin-right: 7.5%;
 }
 
 .png-download {
-    cursor: pointer;
     height: 71px;
     padding-right: 7.5%;
 }
@@ -42,6 +40,7 @@ p {
     font-size: 2rem; 
     color: #ec8f6e;
     position: absolute;
+    cursor: pointer;
 }
 .bi-download {
     margin-top: 23px;

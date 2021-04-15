@@ -35,7 +35,7 @@ function showCharts() {
 
 function showChartInfo() {
   element = document.getElementById('chart-info');
-  element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary> <p>TestiTesti</p> <p>blabla</p> <p>hmpfhmpf</p> </details>'
+  element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary><ul> <li>Try to hover over / click on the attack upgrades in the chart&#39;s legend. You can select multiple.</li> <li>You can pan & zoom inside the chart. Right click to reset the view.</li> <li>Each chart can be saved as png.</li> </ul></details>'
   element.style.display = 'table';
   element.classList.add("chart-info", "animate__animated", "animate__backInRight");
   chartIcons.push(element);
@@ -83,7 +83,7 @@ function charts(columns, data) {
         titleTextStyle: {italic: false, bold: true}
       },
       hAxis: {
-        title: 'Armor Upgrades',
+        title: 'Defense Upgrades',
         titleTextStyle: {italic: false, bold: true}
       },
       explorer: {
