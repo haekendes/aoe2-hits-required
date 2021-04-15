@@ -1,17 +1,41 @@
-#myGrid {
-    width: 500px;
-    height: 600px;
-    border-radius: 4px;
-    font-family: Calibri;
-    font-size: 1.4em;
-    width:100%;
-    height:62.75vh;
+details[open] summary ~ * {
+    animation: sweep .2s ease-in-out;
+  }
+  
+  @keyframes sweep {
+    0%    {opacity: 0; margin-right: -10px}
+    100%  {opacity: 1; margin-right: 0px}
+  }
+details > summary {
+list-style: none;
+}
+details summary::marker {
+display:none;
+}
+summary {
+    width: 32px;
+    height: 48px;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-left: 100%;
+}
+summary:focus {
+    outline: 0px;
+}
+p {
+    font-family: Arial;
+}
+
+.chart-info {
+    cursor: pointer;
+    height: 48px;
+    margin-right: 7.5%;
 }
 
 .png-download {
     cursor: pointer;
     height: 71px;
-    padding-right: 10%;
+    padding-right: 7.5%;
 }
 
 .bi {
@@ -21,6 +45,16 @@
 }
 .bi-download {
     margin-top: 23px;
+}
+
+#myGrid {
+    width: 500px;
+    height: 600px;
+    border-radius: 4px;
+    font-family: Calibri;
+    font-size: 1.4em;
+    width:100%;
+    height:62.75vh;
 }
 
 .slick-row {

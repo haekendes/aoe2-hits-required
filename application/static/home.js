@@ -1,7 +1,8 @@
 var completeData = JSON.parse(localStorage.getItem('fetchedData')),
   columnNames,
   tableData,
-  grid;
+  grid,
+  chartIcons = [];
 
 //if (fetchedData === null || version != localStorage.getItem('version')) {
   fetchData();
@@ -18,7 +19,11 @@ function initSite() {
 }
 
 function hideCharts() {
-  for (e of $('.chart')) {
+  for (let e of $('.chart')) {
+    e.style.display = 'none';
+  }
+  for (let e of chartIcons) {
+    console.log(e)
     e.style.display = 'none';
   }
 }
@@ -28,15 +33,28 @@ function showCharts() {
   }
 }
 
+function showChartInfo() {
+  element = document.getElementById('chart-info');
+  element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary> <p>TestiTesti</p> <p>blabla</p> <p>hmpfhmpf</p> </details>'
+  element.style.display = 'table';
+  element.classList.add("chart-info", "animate__animated", "animate__backInRight");
+  chartIcons.push(element);
+}
+
 function addPngDownloadToChart(chart, id, fileName) {
   google.visualization.events.addListener(chart, 'ready', function () {
-    document.getElementById(id).innerHTML = '<a download='+ fileName +' href="'+ chart.getImageURI() + '"><i class="bi bi-card-image"></i><i class="bi bi-download"></i></a>';
-    document.getElementById(id).title = "Download chart as png";
-    document.getElementById(id).classList.add("png-download");
+    element = document.getElementById(id);
+    element.innerHTML = '<a download='+ fileName +' href="'+ chart.getImageURI() + '" style="margin-right: 32px;"><i class="bi bi-card-image"></i><i class="bi bi-download"></i></a>';
+    element.title = "Save chart as png";
+    element.style.display = 'revert';
+    element.classList.add("png-download", "animate__animated", "animate__backInRight");
+    chartIcons.push(element);
   });
 }
 
 function charts(columns, data) {
+  showChartInfo();
+
   google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(drawChart);
   showCharts();
@@ -72,6 +90,11 @@ function charts(columns, data) {
         zoomDelta: 1.3,
       },
       selectionMode: 'multiple',
+      animation: {
+        startup: true,
+        duration: 750,
+        easing: 'inAndOut',
+      },
     };
 
     // Instantiate and draw the chart.
