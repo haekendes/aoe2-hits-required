@@ -233,6 +233,7 @@ function initSelectors() {
     initSelector(selectData, '#select-pitcher', 'Choose a hitting unit', 
     function (e) {
       columnNames = getSingleColumnNames(e.params.data);
+      columnNames.sort();
       const columns = [{id: "empty", name: "", field: "empty", width: 200}]
       for (e of columnNames) {
         columns.push({id: e, name: e, field: e, width: 175});
