@@ -19,9 +19,7 @@ summary {
     flex-direction: row-reverse;
     margin-left: auto;
 }
-summary:focus {
-    outline: 0px;
-}
+
 p {
     font-family: Arial;
 }
@@ -129,9 +127,9 @@ p {
     border: 1px solid #aaa !important;
     border-radius: 4px;
 }
-.select2-search__field:focus, .select2-selection__rendered {
+.dl-button, .select2-selection:focus-visible, .select2-search__field:focus {
     outline: none;
 }
-.select2:focus, .select2-selection {
-    outline: 0px !important;
+.select2-selection:focus-visible {
+    box-shadow: 0 0 1.5pt 1.5pt #f3b49f;
 }

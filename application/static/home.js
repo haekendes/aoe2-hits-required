@@ -23,18 +23,17 @@ function hideCharts() {
     e.style.display = 'none';
   }
   for (let e of chartIcons) {
-    console.log(e)
     e.style.display = 'none';
   }
 }
 function showCharts() {
-  for (e of $('.chart')) {
+  for (let e of $('.chart')) {
     e.style.display = 'revert';
   }
 }
 
 function showChartInfo() {
-  element = document.getElementById('chart-info');
+  let element = document.getElementById('chart-info');
   element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary><ul> <li>Try to hover over / click on the attack upgrades in the chart&#39;s legend. You can select multiple.</li> <li>You can pan & zoom inside the chart. Right click to reset the view.</li> <li>Each chart can be saved as png.</li> </ul></details>'
   element.style.display = 'table';
   element.classList.add("chart-info", "animate__animated", "animate__backInRight");
@@ -43,7 +42,7 @@ function showChartInfo() {
 
 function addPngDownloadToChart(chart, id, fileName) {
   google.visualization.events.addListener(chart, 'ready', function () {
-    element = document.getElementById(id);
+    let element = document.getElementById(id);
     element.innerHTML = '<a download='+ fileName +' href="'+ chart.getImageURI() + '" style="margin-right: 32px;"><i class="bi bi-card-image"></i><i class="bi bi-download"></i></a>';
     element.title = "Save chart as png";
     element.style.display = 'revert';
@@ -62,7 +61,7 @@ function charts(columns, data) {
   function drawChart() {
     let dataTable = new google.visualization.DataTable();
     dataTable.addColumn('string', 'Element');
-    for (e of columns) {
+    for (let e of columns) {
       dataTable.addColumn("number", e);
     }
     for (let e of data) {
@@ -98,12 +97,12 @@ function charts(columns, data) {
     };
 
     // Instantiate and draw the chart.
-    var chart1 = new google.visualization.ScatterChart(document.getElementById('chart1'));
-    addPngDownloadToChart(chart1, "chart1-png-download", $('#select-catcher').select2('data')[0].text+"-"+$('#select-pitcher').select2('data')[0].text+"-scatter-chart.png");
+    let chart1 = new google.visualization.ScatterChart(document.getElementById('chart1'));
+    addPngDownloadToChart(chart1, "chart1-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+ $('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-scatter-chart.png");
     chart1.draw(dataTable, options);
 
-    var chart2 = new google.visualization.LineChart(document.getElementById('chart2'));
-    addPngDownloadToChart(chart2, "chart2-png-download", $('#select-catcher').select2('data')[0].text+"-"+$('#select-pitcher').select2('data')[0].text+"-line-chart.png");
+    let chart2 = new google.visualization.LineChart(document.getElementById('chart2'));
+    addPngDownloadToChart(chart2, "chart2-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+$('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-line-chart.png");
     chart2.draw(dataTable, options);
 
     let dataTable3 = new google.visualization.DataTable();
@@ -132,8 +131,8 @@ function charts(columns, data) {
     }
     
     
-    var chart3 = new google.visualization.Histogram(document.getElementById('chart3'));
-    addPngDownloadToChart(chart3, "histogram-png-download", $('#select-catcher').select2('data')[0].text+"-"+$('#select-pitcher').select2('data')[0].text+"-histogram.png");
+    let chart3 = new google.visualization.Histogram(document.getElementById('chart3'));
+    addPngDownloadToChart(chart3, "histogram-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+$('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-histogram.png");
     chart3.draw(dataTable3, options);
   }
 }
@@ -167,7 +166,7 @@ function setRowData(objList) { //receives list of unit rows
 
 function setTableData() {
   tableData = []
-  for (e in completeData['table']) {
+  for (let e in completeData['table']) {
     setRowData(Object.values(completeData['table'][e])[0]);
     tableData.push("");
   }
@@ -176,7 +175,7 @@ function setTableData() {
 
 function initTable(colNames, data) {
   const columns = [{id: "empty", name: "", field: "empty", width: 200}]
-  for (e of colNames) {
+  for (let e of colNames) {
     columns.push({id: e, name: e, field: e, width: 175});
   };
   
@@ -192,7 +191,7 @@ function initTable(colNames, data) {
 function setSelectData(data) {
   const selectData = [];
   let index = 0;
-  for (e in completeData['table']) {
+  for (let e in completeData['table']) {
     selectData.push({
       id: index,
       text: Object.keys(completeData['table'][e])[0]
@@ -208,9 +207,9 @@ function initSelectors() {
   $(document).ready(function() {
 
     initSelector(selectData, '#select-catcher', 'Choose a unit getting hit', 
-    function (e) {
+    function (s) {
       tableData = [];
-      setRowData(Object.values(completeData['table'][e.params.data['id']])[0]);
+      setRowData(Object.values(completeData['table'][s.params.data['id']])[0]);
 
       $('#myGrid').height(tableData.length * 25 + 42).trigger('resize');
 
@@ -221,21 +220,22 @@ function initSelectors() {
         charts(columnNames, tableData);
       }
     },
-    function (e) {
-      boolSelect1 = false;
+    function (s) {
       setTableData();
       grid.setData(tableData, true);
       grid.render();
+
+      $('#myGrid').height('62.75vh').trigger('resize');
 
       hideCharts();
     });
 
     initSelector(selectData, '#select-pitcher', 'Choose a hitting unit', 
-    function (e) {
-      columnNames = getSingleColumnNames(e.params.data);
+    function (s) {
+      columnNames = getSingleColumnNames(s.params.data);
       columnNames.sort();
       const columns = [{id: "empty", name: "", field: "empty", width: 200}]
-      for (e of columnNames) {
+      for (let e of columnNames) {
         columns.push({id: e, name: e, field: e, width: 175});
       };
       grid.setColumns(columns);
@@ -244,10 +244,10 @@ function initSelectors() {
         charts(columnNames, tableData);
       }
     },
-    function (e) {
+    function (s) {
       setColumnNames();
       const columns = [{id: "empty", name: "", field: "empty", width: 200}]
-      for (e of columnNames) {
+      for (let e of columnNames) {
         columns.push({id: e, name: e, field: e, width: 175});
       };
       grid.setColumns(columns);
@@ -289,13 +289,13 @@ async function fetchData() {
 }
 
 function combineColumnsWithTable(data) {
-  for (e in data['table']) {
-    for (bla of Object.values(data['table'][e])[0]) {
-      for(k in bla) {
+  for (let e in data['table']) {
+    for (let bla of Object.values(data['table'][e])[0]) {
+      for(let k in bla) {
         var index = 0;
         bla[k].forEach(function(value, i) {
           var temp_obj = {}
-          for(number of value) {
+          for(let number of value) {
             temp_obj[data['columns'][index]] = number;
             index++;
           }
