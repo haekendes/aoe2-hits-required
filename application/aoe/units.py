@@ -546,7 +546,21 @@ class Scorpion(Unit):
 class Monk(Unit):
     def __init__(self):
         super().__init__(30, 0, 0, 0, 0, armor_classes=(25,),
-                         def_upgrades={"+3+3 (Orthodoxy)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=3)})
+                         def_upgrades={"+3+3 (Orthodoxy)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=3),
+                                       "+15HP +3+3 (Orthodoxy)": Upgrade(hp_upgrade=15, melee_armor_upgrade=3, pierce_armor_upgrade=3),
+                                       "+5HP (Aztecs)": Upgrade(hp_upgrade=5),
+                                       "+10HP (Aztecs)": Upgrade(hp_upgrade=10),
+                                       "+15HP (Sanctity)": Upgrade(hp_upgrade=15),
+                                       "+20HP (Aztecs)": Upgrade(hp_upgrade=20),
+                                       "+25HP (Aztecs)": Upgrade(hp_upgrade=25),
+                                       "+30HP (Aztecs)": Upgrade(hp_upgrade=30),
+                                       "+35HP (Aztecs)": Upgrade(hp_upgrade=35),
+                                       "+40HP (Aztecs)": Upgrade(hp_upgrade=40),
+                                       "+45HP (Aztecs)": Upgrade(hp_upgrade=45),
+                                       "+50HP (Aztecs)": Upgrade(hp_upgrade=50),
+                                       "+55HP (Aztecs)": Upgrade(hp_upgrade=55),
+                                       "+60HP (Aztecs)": Upgrade(hp_upgrade=60),
+                                       "+65HP (Aztecs)": Upgrade(hp_upgrade=65),})
 
 
 # imp
@@ -950,3 +964,15 @@ class TrebuchetUnpacked(Unit):
         super().__init__(150, 0, 200, 1, 150, armor_classes=(20, 17,), displayed_name="Trebuchet (unpacked)",
                          def_upgrades={"+4+0 (Ironclad)": Upgrade(melee_armor_upgrade=4)},
                          atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1)})
+
+
+
+class FishingShip(Unit):
+    def __init__(self):
+        super().__init__(60, 0, 0, 0, 4, armor_classes=(34,), displayed_name="Fishing Ship",
+                         def_upgrades={"+0+1": Upgrade(pierce_armor_upgrade=1),
+                                       "+10%HP (Portuguese)": Upgrade(hp_upgrade=6),
+                                       "+10%HP+1+1 (Carrack)": Upgrade(hp_upgrade=6,melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+10%HP+1+2 (Carrack)": Upgrade(hp_upgrade=6,melee_armor_upgrade=1, pierce_armor_upgrade=2),
+                                       "2xHP+0+2 (Japanese)": Upgrade(hp_upgrade=60, pierce_armor_upgrade=2),
+                                       "2xHP+0+3 (Japanese)": Upgrade(hp_upgrade=60, pierce_armor_upgrade=3),})
