@@ -8,14 +8,13 @@
   {% endif %}
   {% block styles %}
     {{ bootstrap.load_css() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='slick.grid.css') }}" type="text/css"/>
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='slick-default-theme.css') }}" type="text/css"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='select2.min.css') }}" type="text/css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" type="text/css"/>
     <link rel="shortcut icon" type="image/x-icon" href="https://static.wikia.nocookie.net/ageofempires/images/8/8c/Blastfurnace.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick.grid.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick-default-theme.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" type="text/css"/>
   {% endblock %}
   {% block scripts %}
     <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -62,18 +61,18 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='jquery-1.12.4.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='jquery.event.drag-2.3.0.js') }}"></script>
 
-<script src="{{ url_for('static', filename='slick.core.js') }}"></script>
-<script src="{{ url_for('static', filename='slick.grid.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick.grid.min.js"></script>
 
-<script src="{{ url_for('static', filename='select2.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
-  const version = 0.1;
+  const version = 0.2;
 </script>
-<script src="{{ url_for('static', filename='home.js') }}"></script>
 <script src="{{ url_for('static', filename='selectors.js') }}"></script>
 <script src="{{ url_for('static', filename='charts.js') }}"></script>
+<script src="{{ url_for('static', filename='home.js') }}"></script>
 </body>
 </html>

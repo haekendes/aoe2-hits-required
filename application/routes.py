@@ -2,7 +2,7 @@ from flask import render_template
 
 from application.aoe.armor_classes import get_armor_class_name
 from application.aoe.units import Unit
-from application.app import app, table_data, column_names, unit_catchers
+from application.app import app, table_data, column_names
 
 
 @app.route('/', methods=['GET'])

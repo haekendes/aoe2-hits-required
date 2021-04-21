@@ -4,7 +4,7 @@ var completeData = JSON.parse(localStorage.getItem('fetchedData')),
   grid,
   chartIcons = [];
 
-//if (fetchedData === null || version != localStorage.getItem('version')) {
+//if (completeData === null || version != localStorage.getItem('version')) {
   fetchData();
 /*}
 else {
