@@ -147,3 +147,9 @@ p {
 .select2-selection:focus-visible {
     box-shadow: 0 0 1.5pt 1.5pt #f3b49f;
 }
+
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #ec8f6e;
+    border-color: #ec8f6e;
+}

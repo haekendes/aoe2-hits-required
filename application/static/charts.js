@@ -9,6 +9,7 @@ function hideCharts() {
     for (let e of $('.chart')) {
       e.style.display = 'none';
     }
+    checkDiv.innerHTML = '';
     for (let e of chartIcons) {
       e.style.display = 'none';
     }
@@ -24,6 +25,7 @@ function hideCharts() {
   function showChartInfoIcon() {
     let element = document.getElementById('chart-info');
     element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary><ul> <li>Try to hover over / click on the attack upgrades in the chart&#39;s legend. You can select multiple.</li> <li>You can pan & zoom inside the chart. Right click to reset the view.</li> <li>Each chart can be saved as png.</li> </ul></details>'
+    element.title = "Information";
     element.style.display = 'table';
     element.classList.add("chart-info", "animate__animated", "animate__backInRight");
     chartIcons.push(element);

@@ -11,7 +11,7 @@ function setSelectData(data) {
     return selectData;
   }
 
-  function chartsDrawing(id) {
+  function switchInitOrRedrawCharts(id) {
     if($(id).select2('data')[0].text) {
         if (chartsInitialized) {
             redrawCharts(columnNames, tableData);
@@ -20,6 +20,12 @@ function setSelectData(data) {
         }
     }
   }
+  function switchHideCharts(id) {
+    if(!$(id).select2('data')[0].text) {
+      hideCharts();
+    }
+  }
+
   
   function initSelectors() {
     const selectData = setSelectData(columnNames);
@@ -27,7 +33,7 @@ function setSelectData(data) {
     $(document).ready(function() {
   
       initSelector(selectData, '#select-catcher', 'Choose a unit getting hit', 
-      function (s) {
+      function (s) { // 1
         tableData = [];
         setRowData(Object.values(completeData['table'][s.params.data['id']])[0]);
   
@@ -36,21 +42,22 @@ function setSelectData(data) {
         grid.setData(tableData, true);
         grid.render();
   
-        chartsDrawing('#select-pitcher');
+        if (!chartsInitialized && $('#select-pitcher').select2('data')[0].text) { // must come before switchInitOrRedrawCharts()
+          initCheckBoxes(columnNames);
+        }
+        switchInitOrRedrawCharts('#select-pitcher');
       },
-      function (s) {
+      function (s) { // 2
         setTableData();
         grid.setData(tableData, true);
         grid.render();
   
         $('#myGrid').height('62.75vh').trigger('resize');
-        if(!$('#select-pitcher').select2('data')[0].text) {
-          hideCharts();
-        }
+        switchHideCharts('#select-pitcher');
       });
   
       initSelector(selectData, '#select-pitcher', 'Choose a hitting unit', 
-      function (s) {
+      function (s) { // 3
         columnNames = getSingleColumnNames(s.params.data);
         const columns = [{id: "empty", name: "", field: "empty", width: 200}]
         for (let e of columnNames) {
@@ -58,18 +65,19 @@ function setSelectData(data) {
         };
         grid.setColumns(columns);
         
-        chartsDrawing('#select-catcher');
+        switchInitOrRedrawCharts('#select-catcher');
+        if (chartsInitialized || $('#select-catcher').select2('data')[0].text) { // distinctly different to function 1
+          initCheckBoxes(columnNames);
+        }
       },
-      function (s) {
+      function (s) { // 4
         setColumnNames();
         const columns = [{id: "empty", name: "", field: "empty", width: 200}]
         for (let e of columnNames) {
           columns.push({id: e, name: e, field: e, width: 175});
         };
         grid.setColumns(columns);
-        if(!$('#select-catcher').select2('data')[0].text) {
-          hideCharts();
-        }
+        switchHideCharts('#select-catcher');
       });
     });
   }
