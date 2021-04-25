@@ -80,7 +80,7 @@ class Unit(object):
     def __sub__(self, unit):
         result = int(math.ceil((self.hp + self.hp_upgrade)
                                / max(1, (max(0, unit.melee_attack + unit.melee_attack_upgrade - (
-                self.melee_armor + self.melee_armor_upgrade) if unit.melee_attack > 0 else 0)
+                self.melee_armor + self.melee_armor_upgrade)) if unit.melee_attack > 0 else 0
                                          + max(0, unit.pierce_attack + unit.pierce_attack_upgrade - (
                         self.pierce_armor + self.pierce_armor_upgrade))
                                          + sum(max(0, value - self.armor_classes[key])

@@ -1,4 +1,4 @@
-var checkDiv = document.getElementById('check-div');
+var checkDiv = document.getElementById('check-form');
 
 //show & hide functions in charts.js
 
@@ -15,18 +15,12 @@ function initCheckBoxes(columns) {
     }
 
     let checkboxes = document.querySelectorAll("input[type=checkbox]");
-    let checkedColumns = [];
 
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
-        checkedColumns = 
-            Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
-            .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
-            .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
 
-            if ($('div.custom-checkbox :checkbox:checked').length > 0) {
-                redrawCharts(checkedColumns, tableData);
-            }
+            drawCharts(tableData);
+            
         });
   });
 }

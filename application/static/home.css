@@ -109,6 +109,15 @@ p {
     z-index: 1000;
     border-radius: 64px;
 }
+#check-div {
+    position: sticky;
+    top: 63px;
+    z-index: 1000;
+}
+#check-form {
+    background: white;
+    border-radius: 64px;
+}
 .custom-select {
     height: 28px;
 }

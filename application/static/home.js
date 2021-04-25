@@ -1,8 +1,7 @@
 var completeData = JSON.parse(localStorage.getItem('fetchedData')),
   columnNames,
   tableData,
-  grid,
-  chartIcons = [];
+  grid;
 
 //if (completeData === null || version != localStorage.getItem('version')) {
   fetchData();

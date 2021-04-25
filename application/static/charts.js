@@ -3,24 +3,101 @@ var scatterChart,
     histogram,
     options,
     histOptions,
-    chartsInitialized = false;
+    chartsInitialized = false,
+    chartIcons = [],
+    observer; // global observer var to reduce draw calls upon multiple column select changes
 
-function hideCharts() {
-    for (let e of $('.chart')) {
-      e.style.display = 'none';
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(init);
+
+  function init() {
+    options = {
+      'height': 500,
+      colors: ['#fadcd1', '#f6c7b6', '#f3b49f','#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300'],
+      vAxis: {
+        title: 'Hits required',
+        titleTextStyle: {italic: false, bold: true}
+      },
+      hAxis: {
+        title: 'Defense Upgrades',
+        titleTextStyle: {italic: false, bold: true}
+      },
+      explorer: {
+        zoomDelta: 1.3,
+      },
+      selectionMode: 'multiple',
+      animation: {
+        startup: true,
+        duration: 750,
+        easing: 'inAndOut',
+      },
+    };
+
+    // Instantiate and draw the chart.
+    scatterChart = new google.visualization.ScatterChart(document.getElementById('chart1'));
+
+    lineChart = new google.visualization.LineChart(document.getElementById('chart2'));
+
+    histOptions = {};
+    Object.assign(histOptions, options);    
+    //change options for histogram
+    histOptions['colors']= ['#ec8f6e',];
+    histOptions['vAxis'] = {
+      title: 'Amount of Matchups',
+      titleTextStyle: {italic: false, bold: true}
     }
-    checkDiv.innerHTML = '';
-    for (let e of chartIcons) {
-      e.style.display = 'none';
+    histOptions['hAxis'] = {
+      title: 'Hits required',
+      titleTextStyle: {italic: false, bold: true}
     }
-    chartsInitialized = false;
+    
+    histogram = new google.visualization.Histogram(document.getElementById('chart3'));
   }
-  function showCharts() {
-    for (let e of $('.chart')) {
-      e.style.display = 'revert';
-    }
-    chartsInitialized = true;
+
+
+  function drawCharts(data) {
+    showChartInfoIcon();
+    let checkboxes = document.querySelectorAll("input[type=checkbox]");
+    let columns = 
+              Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
+              .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+              .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.      
+
+    if (columns.length > 0) {
+      let redrawTable = getChartDataTable(columns, data);
+      let charts = [].slice.call(document.getElementsByClassName("chart"));
+
+      if(observer) {
+        charts.forEach(function(chart) {
+          observer.unobserve(chart);
+        })
+      }
+      observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+
+          if (entry.isIntersecting) {
+
+            if(entry.target.id === 'chart1') {
+              drawScatterChart(redrawTable);
+              observer.unobserve(entry.target);
+            }
+            else if (entry.target.id === 'chart2') {
+              drawLineChart(redrawTable);
+              observer.unobserve(entry.target);
+            } 
+            else if (entry.target.id === 'chart3') {
+              drawHistogram(getHistDataTable(columns, data));
+              observer.unobserve(entry.target);
+            }
+          }
+        });
+      }, {threshold: 0.7});
+
+      charts.forEach(function(chart) {
+        observer.observe(chart);
+      })
   }
+}
 
   function showChartInfoIcon() {
     let element = document.getElementById('chart-info');
@@ -78,72 +155,6 @@ function hideCharts() {
 
     return dataTableHist;
   }
-
-  function initCharts(columns, data) {
-  showChartInfoIcon();
-
-  google.charts.load('current', {packages: ['corechart']});
-  google.charts.setOnLoadCallback(initAndDraw);
-  showCharts();
-
-  function initAndDraw() {
-    dataTable = getChartDataTable(columns, data);
-
-    options = {
-      'height': 500,
-      colors: ['#fadcd1', '#f6c7b6', '#f3b49f','#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300'],
-      vAxis: {
-        title: 'Hits required',
-        titleTextStyle: {italic: false, bold: true}
-      },
-      hAxis: {
-        title: 'Defense Upgrades',
-        titleTextStyle: {italic: false, bold: true}
-      },
-      explorer: {
-        zoomDelta: 1.3,
-      },
-      selectionMode: 'multiple',
-      animation: {
-        startup: true,
-        duration: 750,
-        easing: 'inAndOut',
-      },
-    };
-
-    // Instantiate and draw the chart.
-    scatterChart = new google.visualization.ScatterChart(document.getElementById('chart1'));
-    drawScatterChart(dataTable);
-
-    lineChart = new google.visualization.LineChart(document.getElementById('chart2'));
-    drawLineChart(dataTable);
-
-    dataTableHist = getHistDataTable(columns, data);
-
-    histOptions = {};
-    Object.assign(histOptions, options);    
-    //change options for histogram
-    histOptions['colors']= ['#ec8f6e',];
-    histOptions['vAxis'] = {
-      title: 'Amount of Matchups',
-      titleTextStyle: {italic: false, bold: true}
-    }
-    histOptions['hAxis'] = {
-      title: 'Hits required',
-      titleTextStyle: {italic: false, bold: true}
-    }
-    
-    histogram = new google.visualization.Histogram(document.getElementById('chart3'));
-    drawHistogram(dataTableHist);
-  }
-}
-
-function redrawCharts(columns, data) {
-    let dataTable = getChartDataTable(columns, data);
-    drawScatterChart(dataTable);
-    drawLineChart(dataTable);
-    drawHistogram(getHistDataTable(columns, data));
-}
 
 function drawScatterChart(dataTable) {
     addPngDownloadToChart(scatterChart, "chart1-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+ $('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-scatter-chart.png");

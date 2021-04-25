@@ -10,22 +10,6 @@ function setSelectData(data) {
     }
     return selectData;
   }
-
-  function switchInitOrRedrawCharts(id) {
-    if($(id).select2('data')[0].text) {
-        if (chartsInitialized) {
-            redrawCharts(columnNames, tableData);
-        } else {
-            initCharts(columnNames, tableData);
-        }
-    }
-  }
-  function switchHideCharts(id) {
-    if(!$(id).select2('data')[0].text) {
-      hideCharts();
-    }
-  }
-
   
   function initSelectors() {
     const selectData = setSelectData(columnNames);
@@ -45,7 +29,10 @@ function setSelectData(data) {
         if (!chartsInitialized && $('#select-pitcher').select2('data')[0].text) { // must come before switchInitOrRedrawCharts()
           initCheckBoxes(columnNames);
         }
-        switchInitOrRedrawCharts('#select-pitcher');
+        
+        if($('#select-pitcher').select2('data')[0].text) {
+          drawCharts(tableData);
+        }
       },
       function (s) { // 2
         setTableData();
@@ -53,7 +40,6 @@ function setSelectData(data) {
         grid.render();
   
         $('#myGrid').height('62.75vh').trigger('resize');
-        switchHideCharts('#select-pitcher');
       });
   
       initSelector(selectData, '#select-pitcher', 'Choose a hitting unit', 
@@ -65,9 +51,12 @@ function setSelectData(data) {
         };
         grid.setColumns(columns);
         
-        switchInitOrRedrawCharts('#select-catcher');
-        if (chartsInitialized || $('#select-catcher').select2('data')[0].text) { // distinctly different to function 1
+        if (chartsInitialized || $('#select-catcher').select2('data')[0].text) { // different to function 1
           initCheckBoxes(columnNames);
+        }
+        
+        if($('#select-catcher').select2('data')[0].text) {
+          drawCharts(tableData);
         }
       },
       function (s) { // 4
@@ -77,7 +66,6 @@ function setSelectData(data) {
           columns.push({id: e, name: e, field: e, width: 175});
         };
         grid.setColumns(columns);
-        switchHideCharts('#select-catcher');
       });
     });
   }
