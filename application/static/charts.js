@@ -3,7 +3,6 @@ var scatterChart,
     histogram,
     options,
     histOptions,
-    chartsInitialized = false,
     chartIcons = [],
     observer; // global observer var to reduce draw calls upon multiple column select changes
 
@@ -28,9 +27,10 @@ var scatterChart,
       selectionMode: 'multiple',
       animation: {
         startup: true,
-        duration: 750,
+        duration: 330,
         easing: 'inAndOut',
       },
+      allowAsync: 'true',
     };
 
     // Instantiate and draw the chart.
@@ -56,20 +56,26 @@ var scatterChart,
 
 
   function drawCharts(data) {
-    showChartInfoIcon();
+    if(!chartIcons.length) {
+      showChartInfoIcon();
+      addPngDownloadToChart(scatterChart, "chart1-png-download");
+      addPngDownloadToChart(lineChart, "chart2-png-download");
+      addPngDownloadToChart(histogram, "histogram-png-download");
+    }
+
     let checkboxes = document.querySelectorAll("input[type=checkbox]");
     let columns = 
               Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
               .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
               .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.      
 
-    if (columns.length > 0) {
+    if (columns.length) {
       let redrawTable = getChartDataTable(columns, data);
       let charts = [].slice.call(document.getElementsByClassName("chart"));
 
       if(observer) {
         charts.forEach(function(chart) {
-          observer.unobserve(chart);
+          observer.unobserve(chart); // remove old observers who haven't been triggered and are now obsolete
         })
       }
       observer = new IntersectionObserver((entries, observer) => {
@@ -91,7 +97,7 @@ var scatterChart,
             }
           }
         });
-      }, {threshold: 0.7});
+      }, {threshold: 0.5});
 
       charts.forEach(function(chart) {
         observer.observe(chart);
@@ -108,15 +114,22 @@ var scatterChart,
     chartIcons.push(element);
   }
 
-  function addPngDownloadToChart(chart, id, fileName) {
-    google.visualization.events.addListener(chart, 'ready', function () {
+  function addPngDownloadToChart(chart, id) {
       let element = document.getElementById(id);
-      element.innerHTML = '<a download='+ fileName +' href="'+ chart.getImageURI() + '" style="margin-right: 32px;"><i class="bi bi-card-image"></i><i class="bi bi-download"></i></a>';
+      element.addEventListener("click", function() {
+        var link = document.createElement("a");
+        link.download = $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+ $('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-scatter-chart.png";
+        link.href = chart.getImageURI();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+      }); 
+      element.innerHTML = '<a style="margin-right: 32px;"><i class="bi bi-card-image"></i><i class="bi bi-download"></i></a>';
       element.title = "Save chart as png";
       element.style.display = 'revert';
       element.classList.add("png-download", "animate__animated", "animate__backInRight");
       chartIcons.push(element);
-    });
   }
 
   function getChartDataTable(columns, data) {
@@ -157,16 +170,13 @@ var scatterChart,
   }
 
 function drawScatterChart(dataTable) {
-    addPngDownloadToChart(scatterChart, "chart1-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+ $('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-scatter-chart.png");
     scatterChart.draw(dataTable, options);
 }
 
 function drawLineChart(dataTable) {
-    addPngDownloadToChart(lineChart, "chart2-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+$('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-line-chart.png");
     lineChart.draw(dataTable, options);
 }
 
 function drawHistogram(dataTable) {
-    addPngDownloadToChart(histogram, "histogram-png-download", $('#select-catcher').select2('data')[0].text.replaceAll(' ', '_') +"-"+$('#select-pitcher').select2('data')[0].text.replaceAll(' ', '_') +"-histogram.png");
     histogram.draw(dataTable, histOptions);
 }

@@ -26,7 +26,7 @@ function setSelectData(data) {
         grid.setData(tableData, true);
         grid.render();
   
-        if (!chartsInitialized && $('#select-pitcher').select2('data')[0].text) { // must come before switchInitOrRedrawCharts()
+        if ($('#select-pitcher').select2('data')[0].text) { // must come before drawCharts()
           initCheckBoxes(columnNames);
         }
         
@@ -51,7 +51,7 @@ function setSelectData(data) {
         };
         grid.setColumns(columns);
         
-        if (chartsInitialized || $('#select-catcher').select2('data')[0].text) { // different to function 1
+        if ($('#select-catcher').select2('data')[0].text) {
           initCheckBoxes(columnNames);
         }
         
