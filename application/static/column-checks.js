@@ -10,7 +10,7 @@ function initCheckBoxes(columns) {
         new_div.innerHTML = '<div class="mx-2 custom-control custom-checkbox">'
         +'<input class="custom-control-input" type="checkbox" id="'+e+'Checkbox" value="'+ e +'" checked>'
         +'<label class="custom-control-label" for="'+e+'Checkbox">'+ e +'</label>'
-        +'</div>'
+        +'</div>';
         checkDiv.appendChild(new_div);
     }
 

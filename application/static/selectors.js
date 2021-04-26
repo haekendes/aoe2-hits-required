@@ -48,7 +48,7 @@ function setSelectData(data) {
         const columns = [{id: "empty", name: "", field: "empty", width: 200}]
         for (let e of columnNames) {
           columns.push({id: e, name: e, field: e, width: 175});
-        };
+        }
         grid.setColumns(columns);
         
         if ($('#select-catcher').select2('data')[0].text) {
@@ -64,7 +64,7 @@ function setSelectData(data) {
         const columns = [{id: "empty", name: "", field: "empty", width: 200}]
         for (let e of columnNames) {
           columns.push({id: e, name: e, field: e, width: 175});
-        };
+        }
         grid.setColumns(columns);
       });
     });
