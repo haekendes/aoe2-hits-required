@@ -4,8 +4,8 @@ var scatterChart,
     options,
     histOptions,
     chartIcons = [],
-    observer,
-    chart_colors = ['#fadcd1', '#f6c7b6', '#f3b49f','#ec8f6e','#e6693e', '#e05424', '#e0440e', 'c53300']; // global observer var to reduce draw calls upon multiple column select changes
+    observer, // global observer var to reduce draw calls upon multiple column select changes
+    chart_colors = ['#fadcd1', '#f6c7b6', '#f3b49f','#ec8f6e','#e6693e', '#e05424', '#e0440e', '#c53300', '#942600'];
 
   google.charts.load('current', {packages: ['corechart']});
   google.charts.setOnLoadCallback(init);
@@ -128,12 +128,14 @@ function setOptionColors(columns_length) {
       return chart_colors.slice(1);
     case 8:
       return chart_colors;
+    case 9:
+      return chart_colors;
   }
 }
 
 function showChartInfoIcon() {
   let element = document.getElementById('chart-info');
-  element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary><ul> <li>Try to hover over / click on the attack upgrades in the chart&#39;s legend. You can select multiple.</li> <li>You can pan & zoom inside the chart. Right click to reset the view.</li> <li>Each chart can be saved as png.</li> </ul></details>';
+  element.innerHTML = '<details><summary><i class="bi bi-info-circle"></i></summary><ul> <li>After loading the site, try pressing tab+enter+enter, then again tab+enter+enter and see what happens. <br>You can use this to quickly select units with keyboard only.</li><li>Try to hover over / click on the attack upgrades in the chart&#39;s legend. You can select multiple.</li> <li>You can pan & zoom inside the chart. Right click to reset the view.</li> <li>Each chart can be saved as png.</li><li>Your checkbox choice is saved depending on the checkbox position, not on attack upgrade.<br>It also stays saved if you leave the session.</li><li>Charts are updated only if scrolled into view.</li> </ul></details>';
   element.title = "Information";
   element.style.display = 'table';
   element.classList.add("chart-info", "animate__animated", "animate__backInRight");

@@ -23,8 +23,8 @@ function setSelectData(data) {
   
         $('#myGrid').height(tableData.length * 25 + 42).trigger('resize');
   
-        grid.setData(tableData, true);
-        grid.render();
+        tableGrid.setData(tableData, true);
+        tableGrid.render();
   
         if ($('#select-pitcher').select2('data')[0].text) { // must come before drawCharts()
           initCheckBoxes(columnNames);
@@ -36,8 +36,8 @@ function setSelectData(data) {
       },
       function (s) { // 2
         setTableData();
-        grid.setData(tableData, true);
-        grid.render();
+        tableGrid.setData(tableData, true);
+        tableGrid.render();
   
         $('#myGrid').height('62.75vh').trigger('resize');
       });
@@ -49,7 +49,7 @@ function setSelectData(data) {
         for (let e of columnNames) {
           columns.push({id: e, name: e, field: e, width: 175});
         }
-        grid.setColumns(columns);
+        tableGrid.setColumns(columns);
         
         if ($('#select-catcher').select2('data')[0].text) {
           initCheckBoxes(columnNames);
@@ -65,7 +65,7 @@ function setSelectData(data) {
         for (let e of columnNames) {
           columns.push({id: e, name: e, field: e, width: 175});
         }
-        grid.setColumns(columns);
+        tableGrid.setColumns(columns);
       });
     });
   }
@@ -80,3 +80,6 @@ function setSelectData(data) {
     $(id).on('select2:unselect', onUnselect);
   }
   
+  function getSingleColumnNames(data) {
+    return Object.keys(Object.values(Object.values(Object.values(completeData['table'])[0])[0][0])[0][data['id']]);
+  }

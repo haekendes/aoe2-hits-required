@@ -5,17 +5,17 @@ from application.aoe.units import Unit
 from application.app import app, table_data, column_names
 
 
-@app.route('/', methods=['GET'])
+@app.get('/')
 def home():
     return render_template('home.html')
 
 
-@app.route('/get_table', methods=['GET'])
+@app.get('/get_table')
 def get_table():
     return {"table": table_data, "columns": column_names}
 
 
-@app.route('/get_units', methods=['GET'])
+@app.get('/get_units')
 def get_units():
     dict = {}
     for cls in Unit.__subclasses__():
