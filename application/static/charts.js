@@ -16,7 +16,8 @@ var scatterChart,
       colors: chart_colors,
       vAxis: {
         title: 'Hits required',
-        titleTextStyle: {italic: false, bold: true}
+        titleTextStyle: {italic: false, bold: true},
+        minValue: 0,
       },
       hAxis: {
         title: 'Defense Upgrades',

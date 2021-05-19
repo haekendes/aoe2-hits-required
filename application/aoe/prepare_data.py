@@ -1,6 +1,7 @@
 from application.aoe.units import Unit
 
 unit_catchers = [cls() for cls in Unit.__subclasses__()]
+#unit_catchers.sort(key=lambda x:x.__class__.__name__)
 unit_pitchers = unit_catchers.copy()
 
 
