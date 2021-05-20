@@ -4,11 +4,11 @@ var fetchedData = JSON.parse(localStorage.getItem('fetchedData')),
 if (fetchedData === null || version != localStorage.getItem('version')) {
     fetchData();
 } else {
-    initSite(); //gotta do it with if else, as fetching is async. If fetch, then init only after fetch finished.
+    initSite(fetchedData); //gotta do it with if else, as fetching is async. If fetch, then init only after fetch finished.
 }
 
-function initSite() {
-    completeData = combineColumnsWithTable(fetchedData);
+function initSite(data) {
+    completeData = combineColumnsWithTable(data);
     setColumnNames();
     setTableData();
     initTable(columnNames, tableData);
