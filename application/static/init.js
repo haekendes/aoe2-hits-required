@@ -1,12 +1,14 @@
-var completeData = JSON.parse(localStorage.getItem('fetchedData'));
+var fetchedData = JSON.parse(localStorage.getItem('fetchedData')),
+  completeData;
 
-if (completeData === null || version != localStorage.getItem('version')) {
+if (fetchedData === null || version != localStorage.getItem('version')) {
     fetchData();
 } else {
     initSite(); //gotta do it with if else, as fetching is async. If fetch, then init only after fetch finished.
 }
 
 function initSite() {
+    completeData = combineColumnsWithTable(fetchedData);
     setColumnNames();
     setTableData();
     initTable(columnNames, tableData);
@@ -24,10 +26,9 @@ async function fetchData() {
         return;
       }
       response.json().then(function (data) {
-        completeData = combineColumnsWithTable(data);
-        localStorage.setItem('fetchedData', JSON.stringify(completeData));
+        localStorage.setItem('fetchedData', JSON.stringify(data));
         localStorage.setItem('version', version);
-        initSite();
+        initSite(data);
       });
     } catch (err) {
       console.log('Fetch Error :-S', err);
