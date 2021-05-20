@@ -25,7 +25,7 @@ async function fetchData() {
       }
       response.json().then(function (data) {
         completeData = combineColumnsWithTable(data);
-        //localStorage.setItem('fetchedData', JSON.stringify(completeData));
+        localStorage.setItem('fetchedData', JSON.stringify(completeData));
         localStorage.setItem('version', version);
         initSite();
       });
