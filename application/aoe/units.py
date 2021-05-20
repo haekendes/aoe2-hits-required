@@ -147,12 +147,24 @@ class Militia(Unit):
 
 class Archer(Unit):
     def __init__(self):
-        super().__init__(30, 0, 4, 0, 0, armor_classes=(15,), bonus_attack_classes=(27,), bonus_attack_values=(3,))
+        super().__init__(30, 0, 4, 0, 0, armor_classes=(15,), bonus_attack_classes=(27,), bonus_attack_values=(3,),
+                         def_upgrades={"+4+5 (Pavise)": Upgrade(0, 0, 0, 4, 5),
+                                       " (Vietnamese)": Upgrade(6, 0, 0, 0, 0),
+                                       "+1+1 (Vietnamese)": Upgrade(6, 0, 0, 1, 1),
+                                       "+2+2 (Vietnamese)": Upgrade(6, 0, 0, 2, 2),
+                                       "+3+4 (Vietnamese)": Upgrade(6, 0, 0, 3, 4), })
 
 
 class Skirmisher(Unit):
     def __init__(self):
-        super().__init__(30, 0, 2, 0, 3, armor_classes=(15,), bonus_attack_classes=(15, 27), bonus_attack_values=(3, 3))
+        super().__init__(30, 0, 2, 0, 3, armor_classes=(15,), bonus_attack_classes=(15, 27), bonus_attack_values=(3, 3),
+                         def_upgrades={"+3+6 (TowerShields)": Upgrade(0, 0, 0, 3, 6),
+                                       " (Vietnamese)": Upgrade(6, 0, 0, 0, 0),
+                                       "+1+1 (Vietnamese)": Upgrade(6, 0, 0, 1, 1),
+                                       "+2+2 (Vietnamese)": Upgrade(6, 0, 0, 2, 2),
+                                       "+3+4 (Vietnamese)": Upgrade(6, 0, 0, 3, 4),
+                                       },
+                         atk_upgrades={"+5 (Atlatl)": Upgrade(0, 0, 5, 0, 0)})
 
 
 class Scout(Unit):
@@ -207,7 +219,38 @@ class ManAtArms(Unit):
 class Spearman(Unit):
     def __init__(self):
         super().__init__(45, 3, 0, 0, 0, armor_classes=(1, 27), bonus_attack_classes=(8, 5, 30, 16, 34, 35, 29,),
-                         bonus_attack_values=(15, 15, 12, 9, 9, 4, 1,))
+                         bonus_attack_values=(15, 15, 12, 9, 9, 4, 1,),
+                         atk_upgrades={"+3 (Burmese)": Upgrade(melee_attack_upgrade=3),
+                                       "+5 (Burmese)": Upgrade(melee_attack_upgrade=5),
+                                       "+6 (GarlandWars)": Upgrade(melee_attack_upgrade=6),
+                                       "+7 (Burmese)": Upgrade(melee_attack_upgrade=7),
+                                       "+8 (GarlandWars)": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+0+3 (Malians)": Upgrade(pierce_armor_upgrade=3),
+                                       "+2+5 (Malians)": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=5),
+                                       "+3+7 (Malians)": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=7),
+                                       "+4+2 (Teutons)": Upgrade(melee_armor_upgrade=4, pierce_armor_upgrade=2),
+                                       "+5+4 (Teutons)": Upgrade(melee_armor_upgrade=5, pierce_armor_upgrade=4),
+                                       "+10%HP (Vikings)": Upgrade(hp_upgrade=4.5),
+                                       "+10%HP+1+1 (Vikings)": Upgrade(hp_upgrade=4.5, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+10%HP+2+2 (Vikings)": Upgrade(hp_upgrade=4.5, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+10%HP+3+4 (Vikings)": Upgrade(hp_upgrade=4.5, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+15%HP (Vikings)": Upgrade(hp_upgrade=6.75),
+                                       "+15%HP+1+1 (Vikings)": Upgrade(hp_upgrade=6.75, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+15%HP+2+2 (Vikings)": Upgrade(hp_upgrade=6.75, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+15%HP+3+4 (Vikings)": Upgrade(hp_upgrade=6.75, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4),
+                                       "+20%HP (Vikings)": Upgrade(hp_upgrade=9),
+                                       "+20%HP+1+1 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=1,
+                                                                       pierce_armor_upgrade=1),
+                                       "+20%HP+2+2 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=2,
+                                                                       pierce_armor_upgrade=2),
+                                       "+20%HP+3+4 (Vikings)": Upgrade(hp_upgrade=9, melee_armor_upgrade=3,
+                                                                       pierce_armor_upgrade=4), })
 
 
 class EagleScout(Unit):
@@ -1742,7 +1785,7 @@ class Samurai(Unit):
                                        "+4": Upgrade(melee_attack_upgrade=4)},
                          def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
                                        "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
-                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),})
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
 
 
 class EliteSamurai(Unit):
@@ -1754,4 +1797,598 @@ class EliteSamurai(Unit):
                                        "+4": Upgrade(melee_attack_upgrade=4)},
                          def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
                                        "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
-                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),})
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class BallistaElephant(Unit):
+    def __init__(self):
+        super().__init__(250, 0, 8, 0, 3, armor_classes=(8, 5, 20, 19,), armor_class_values=(-2, -2, -2, 0,),
+                         bonus_attack_classes=(16, 34,), bonus_attack_values=(8, 8,),
+                         displayed_name="Ballista Elephant",
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteBallistaElephant(Unit):
+    def __init__(self):
+        super().__init__(290, 0, 9, 0, 3, armor_classes=(8, 5, 20, 19,), armor_class_values=(-2, -2, -2, 0,),
+                         bonus_attack_classes=(16, 34,), bonus_attack_values=(8, 8,),
+                         displayed_name="Elite Ballista Elephant",
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class WarWagon(Unit):
+    def __init__(self):
+        super().__init__(150, 0, 9, 0, 3, armor_classes=(15, 28, 8, 19,), displayed_name="War Wagon",
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1),
+                                       "+2": Upgrade(pierce_attack_upgrade=2),
+                                       "+3": Upgrade(pierce_attack_upgrade=3),
+                                       "+4": Upgrade(pierce_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteWarWagon(Unit):
+    def __init__(self):
+        super().__init__(200, 0, 9, 0, 4, armor_classes=(15, 28, 8, 19,), displayed_name="Elite War Wagon",
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1),
+                                       "+2": Upgrade(pierce_attack_upgrade=2),
+                                       "+3": Upgrade(pierce_attack_upgrade=3),
+                                       "+4": Upgrade(pierce_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class Leitis(Unit):
+    def __init__(self):
+        super().__init__(100, 12, 0, 1, 1, armor_classes=(8, 19,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+3": Upgrade(melee_attack_upgrade=3),
+                                       "+4": Upgrade(melee_attack_upgrade=4),
+                                       "+5": Upgrade(melee_attack_upgrade=5),
+                                       "+6": Upgrade(melee_attack_upgrade=6),
+                                       "+7": Upgrade(melee_attack_upgrade=7),
+                                       "+8": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteLeitis(Unit):
+    def __init__(self):
+        super().__init__(130, 14, 0, 2, 1, armor_classes=(8, 19,), displayed_name="Elite Leitis",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+3": Upgrade(melee_attack_upgrade=3),
+                                       "+4": Upgrade(melee_attack_upgrade=4),
+                                       "+5": Upgrade(melee_attack_upgrade=5),
+                                       "+6": Upgrade(melee_attack_upgrade=6),
+                                       "+7": Upgrade(melee_attack_upgrade=7),
+                                       "+8": Upgrade(melee_attack_upgrade=8)},
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class MagyarHuszar(Unit):
+    def __init__(self):
+        super().__init__(70, 9, 0, 0, 2, armor_classes=(8, 19,), bonus_attack_classes=(20, 17,),
+                         bonus_attack_values=(5, 1,), displayed_name="Magyar Huszar",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteMagyarHuszar(Unit):
+    def __init__(self):
+        super().__init__(85, 10, 0, 0, 2, armor_classes=(8, 19,), bonus_attack_classes=(20, 17,),
+                         bonus_attack_values=(8, 2,), displayed_name="EliteMagyar Huszar",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class KarambitWarrior(Unit):
+    def __init__(self):
+        super().__init__(30, 7, 0, 0, 1, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         displayed_name="Karambit Warrior",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteKarambitWarrior(Unit):
+    def __init__(self):
+        super().__init__(40, 8, 0, 1, 1, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         displayed_name="Elite Karambit Warrior",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class Gbeto(Unit):
+    def __init__(self):
+        super().__init__(30, 10, 0, 0, 0, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(1,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteGbeto(Unit):
+    def __init__(self):
+        super().__init__(45, 13, 0, 0, 0, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(1,),
+                         displayed_name="Elite Gbeto",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class PlumedArcher(Unit):
+    def __init__(self):
+        super().__init__(50, 0, 5, 0, 1, armor_classes=(15, 19,), bonus_attack_classes=(27, 1, 32,),
+                         bonus_attack_values=(2, 1, 1,), displayed_name="Plumed Archer",
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1),
+                                       "+2": Upgrade(pierce_attack_upgrade=2),
+                                       "+3": Upgrade(pierce_attack_upgrade=3),
+                                       "+4": Upgrade(pierce_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class ElitePlumedArcher(Unit):
+    def __init__(self):
+        super().__init__(65, 0, 5, 0, 2, armor_classes=(15, 19,), bonus_attack_classes=(27, 1, 32,),
+                         bonus_attack_values=(2, 2, 2,), displayed_name="Elite Plumed Archer",
+                         atk_upgrades={"+1": Upgrade(pierce_attack_upgrade=1),
+                                       "+2": Upgrade(pierce_attack_upgrade=2),
+                                       "+3": Upgrade(pierce_attack_upgrade=3),
+                                       "+4": Upgrade(pierce_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class Mangudai(Unit):
+    def __init__(self):
+        super().__init__(60, 0, 6, 0, 0, armor_classes=(15, 28, 8, 19,), bonus_attack_classes=(20, 27,),
+                         bonus_attack_values=(3, 1,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+3": Upgrade(melee_attack_upgrade=3),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteMangudai(Unit):
+    def __init__(self):
+        super().__init__(60, 0, 8, 1, 0, armor_classes=(15, 28, 8, 19,), bonus_attack_classes=(20, 27,),
+                         bonus_attack_values=(5, 1,), displayed_name="Elite Mangudai",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+3": Upgrade(melee_attack_upgrade=3),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class WarElephant(Unit):
+    def __init__(self):
+        super().__init__(450, 15, 0, 1, 2, armor_classes=(8, 5, 19,), displayed_name="War Elephant",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteWarElephant(Unit):
+    def __init__(self):
+        super().__init__(600, 20, 0, 1, 3, armor_classes=(8, 5, 19,), displayed_name="Elite War Elephant",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class OrganGun(Unit):
+    def __init__(self):
+        super().__init__(60, 0, 16, 2, 4, armor_classes=(20, 23, 19,), bonus_attack_classes=(17,),
+                         bonus_attack_values=(1,), displayed_name="Organ Gun", )
+
+
+class EliteOrganGun(Unit):
+    def __init__(self):
+        super().__init__(70, 0, 20, 2, 6, armor_classes=(20, 23, 19,), bonus_attack_classes=(17,),
+                         bonus_attack_values=(1,), displayed_name="Elite Organ Gun", )
+
+
+class Mameluke(Unit):
+    def __init__(self):
+        super().__init__(75, 8, 0, 0, 0, armor_classes=(15, 35, 30, 19,), bonus_attack_classes=(8,),
+                         bonus_attack_values=(9,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4),
+                                       "+Bl. (Zealotry)": Upgrade(hp_upgrade=40),
+                                       "+Bl.+1+1 (Zealotry)": Upgrade(hp_upgrade=40, melee_armor_upgrade=1,
+                                                                      pierce_armor_upgrade=1),
+                                       "+Bl.+2+2 (Zealotry)": Upgrade(hp_upgrade=40, melee_armor_upgrade=2,
+                                                                      pierce_armor_upgrade=2),
+                                       "+Bl.+3+4 (Zealotry)": Upgrade(hp_upgrade=40, melee_armor_upgrade=3,
+                                                                      pierce_armor_upgrade=4), })
+
+
+class EliteMameluke(Unit):
+    def __init__(self):
+        super().__init__(90, 10, 0, 1, 0, armor_classes=(15, 35, 30, 19,), bonus_attack_classes=(8, 35,),
+                         bonus_attack_values=(12, 1,), displayed_name="Elite Mameluke",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4),
+                                       "+Bl. (Zealotry)": Upgrade(hp_upgrade=40),
+                                       "+Bl.+1+1 (Zealotry)": Upgrade(hp_upgrade=40, melee_armor_upgrade=1,
+                                                                      pierce_armor_upgrade=1),
+                                       "+Bl.+2+2 (Zealotry)": Upgrade(hp_upgrade=40, melee_armor_upgrade=2,
+                                                                      pierce_armor_upgrade=2),
+                                       "+Bl.+3+4 (Zealotry)": Upgrade(hp_upgrade=40, melee_armor_upgrade=3,
+                                                                      pierce_armor_upgrade=4), })
+
+
+class SerjeantFeudal(Unit):
+    def __init__(self):
+        super().__init__(45, 5, 0, 2, 2, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         displayed_name="Serjeant (Feudal)",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class SerjeantCastle(Unit):
+    def __init__(self):
+        super().__init__(65, 8, 0, 3, 3, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         displayed_name="Serjeant (Castle)",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteSerjeant(Unit):
+    def __init__(self):
+        super().__init__(85, 11, 0, 4, 4, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         displayed_name="Elite Serjeant",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class Boyar(Unit):
+    def __init__(self):
+        super().__init__(100, 12, 0, 4, 2, armor_classes=(8, 19,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteBoyar(Unit):
+    def __init__(self):
+        super().__init__(130, 14, 0, 6, 3, armor_classes=(8, 19,), displayed_name="Elite Boyar",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class Conquistador(Unit):
+    def __init__(self):
+        super().__init__(55, 0, 16, 2, 2, armor_classes=(15, 28, 8, 23, 19,), bonus_attack_classes=(17,),
+                         bonus_attack_values=(4,),
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteConquistador(Unit):
+    def __init__(self):
+        super().__init__(70, 0, 18, 2, 2, armor_classes=(15, 28, 8, 23, 19,), bonus_attack_classes=(17,),
+                         bonus_attack_values=(6,), displayed_name="Elite Conquistador",
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class Keshik(Unit):
+    def __init__(self):
+        super().__init__(110, 9, 0, 1, 2, armor_classes=(8, 19,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class EliteKeshik(Unit):
+    def __init__(self):
+        super().__init__(140, 11, 0, 1, 3, armor_classes=(8, 19,), displayed_name="Elite Keshik",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "+Bl.": Upgrade(hp_upgrade=20),
+                                       "+Bl.+1+1": Upgrade(hp_upgrade=20, melee_armor_upgrade=1,
+                                                           pierce_armor_upgrade=1),
+                                       "+Bl.+2+2": Upgrade(hp_upgrade=20, melee_armor_upgrade=2,
+                                                           pierce_armor_upgrade=2),
+                                       "+Bl.+3+4": Upgrade(hp_upgrade=20, melee_armor_upgrade=3,
+                                                           pierce_armor_upgrade=4), })
+
+
+class TeutonicKnight(Unit):
+    def __init__(self):
+        super().__init__(80, 12, 0, 5, 2, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(4,),
+                         displayed_name="Teutonic Knight",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteTeutonicKnight(Unit):
+    def __init__(self):
+        super().__init__(100, 17, 0, 10, 2, armor_classes=(1, 19,), bonus_attack_classes=(29,),
+                         bonus_attack_values=(4,),
+                         displayed_name="Elite Teutonic Knight",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class Janissary(Unit):
+    def __init__(self):
+        super().__init__(44, 0, 17, 1, 0, armor_classes=(15, 23, 19,), bonus_attack_classes=(17,),
+                         bonus_attack_values=(2,),
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteJanissary(Unit):
+    def __init__(self):
+        super().__init__(50, 0, 22, 2, 0, armor_classes=(15, 23, 19,), bonus_attack_classes=(17,),
+                         bonus_attack_values=(2,), displayed_name="Elite Janissary",
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class RattanArcher(Unit):
+    def __init__(self):
+        super().__init__(40, 0, 6, 0, 4, armor_classes=(15, 19,), bonus_attack_classes=(27,), bonus_attack_values=(2,),
+                         displayed_name="Rattan Archer",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+3": Upgrade(melee_attack_upgrade=3),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class EliteRattanArcher(Unit):
+    def __init__(self):
+        super().__init__(45, 0, 7, 0, 6, armor_classes=(15, 19,), bonus_attack_classes=(27,), bonus_attack_values=(2,),
+                         displayed_name="Rattan Archer",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+3": Upgrade(melee_attack_upgrade=3),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
+
+
+class Berserk(Unit):
+    def __init__(self):
+        super().__init__(61, 9, 0, 0, 1, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(2,),
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4),
+                                       "(in Imp)": Upgrade(hp_upgrade=3),
+                                       "+1+1 (in Imp)": Upgrade(hp_upgrade=3, melee_armor_upgrade=1,
+                                                                pierce_armor_upgrade=1),
+                                       "+2+2 (in Imp)": Upgrade(hp_upgrade=3, melee_armor_upgrade=2,
+                                                                pierce_armor_upgrade=2),
+                                       "+3+4 (in Imp)": Upgrade(hp_upgrade=3, melee_armor_upgrade=3,
+                                                                pierce_armor_upgrade=4), })
+
+
+class EliteBerserk(Unit):
+    def __init__(self):
+        super().__init__(75, 14, 0, 2, 1, armor_classes=(1, 19,), bonus_attack_classes=(29,), bonus_attack_values=(3,),
+                         displayed_name="Elite Berserk",
+                         atk_upgrades={"+1": Upgrade(melee_attack_upgrade=1),
+                                       "+2": Upgrade(melee_attack_upgrade=2),
+                                       "+4": Upgrade(melee_attack_upgrade=4), },
+                         def_upgrades={"+1+1": Upgrade(melee_armor_upgrade=1, pierce_armor_upgrade=1),
+                                       "+2+2": Upgrade(melee_armor_upgrade=2, pierce_armor_upgrade=2),
+                                       "+3+4": Upgrade(melee_armor_upgrade=3, pierce_armor_upgrade=4), })
