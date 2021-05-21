@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, send_from_directory
 
 from application.aoe.armor_classes import get_armor_class_name
 from application.aoe.units import Unit
@@ -33,3 +33,8 @@ def get_units():
                                         "Upgrades_def": f"{obj.def_upgrades}"
                                         }
     return {'units': dict}
+
+
+@app.get('/download_file/<file_name>')
+def download_file(file_name):
+    return send_from_directory(app.config['FILES_PATH'], file_name)
