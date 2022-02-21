@@ -1,0 +1,31 @@
+class_dict = {0: 0,
+              1: "Infantry",
+              2: "Turtle Ship",
+              3: "Base pierce",
+              4: "Base melee",
+              5: "War elephant",
+              8: "Cavalry",
+              14: "Predator animals",
+              15: "Archer",
+              16: "Ship",
+              17: "Ram",
+              18: "Tree",
+              19: "Unique unit",
+              20: "Siege weapon",
+              23: "Gunpowder unit",
+              24: "Boar",
+              25: "Monk",
+              27: "Spearman",
+              28: "Cavalry Archer",
+              29: "Eagle Warrior",
+              30: "Camel",
+              31: "Anti-Leitis",
+              32: "Condottiero",
+              33: "Anti Gunpowder",
+              34: "Fishing Ship",
+              35: "Mameluke",
+              36: "Hero and King"}
+
+
+def get_armor_class_name(key):
+    return class_dict[key]

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  {% if title %}
+      <title>{{ title }} (￣ω￣)~Haekendes</title>
+  {% endif %}
+  {% block styles %}
+    {{ bootstrap.load_css() }}
+    <link rel="shortcut icon" type="image/x-icon" href="https://static.wikia.nocookie.net/ageofempires/images/8/8c/Blastfurnace.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick.grid.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick-default-theme.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" type="text/css"/>
+  {% endblock %}
+  {% block scripts %}
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+  {% endblock %}
+</head>
+<body>
+  <div class="container">
+    <div id="selector-div" class="p-4 mt-3 mb-1 mx-auto">
+      <div class="col-sm">
+        <select id="select-catcher" class="custom-select" tabindex="1">
+          <option></option>
+        </select>
+      </div>
+      <div class="col-sm">
+        <select id="select-pitcher" class="custom-select" tabindex="2">
+          <option></option>
+        </select>
+        </div>
+    </div>
+    <div>
+      <table class="table" width="100%">
+        <tr>
+          <td valign="top" class="grid-col w-100">
+            <div id="myGrid"></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="d-flex flex-row-reverse">
+      <div id="chart-info"></div>
+    </div>
+    <div id="check-div" class="d-flex flex-column align-items-center">
+      <form id="check-form" class="form-check form-check-inline"></form>
+    </div>
+    <div id="chart1" class="chart"></div>
+    <div class="d-flex flex-row-reverse">
+      <div id='chart1-png-download' class="dl-button" tabindex="3"></div>
+    </div>
+    <div id="chart2" class="chart"></div>
+    <div class="d-flex flex-row-reverse">
+      <div id='chart2-png-download' class="dl-button" tabindex="4"></div>
+    </div>
+    <div id="chart3" class="chart"></div>
+    <div class="d-flex flex-row-reverse">
+      <div id='histogram-png-download' class="dl-button" tabindex="5"></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='jquery.event.drag-2.3.0.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/6pac-slickgrid/2.4.34/slick.grid.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+  const version = 0.2;
+</script>
+<script src="{{ url_for('static', filename='table.js') }}"></script>
+<script src="{{ url_for('static', filename='selectors.js') }}"></script>
+<script src="{{ url_for('static', filename='column-checks.js') }}"></script>
+<script src="{{ url_for('static', filename='charts.js') }}"></script>
+<script src="{{ url_for('static', filename='init.js') }}"></script>
+</body>
+</html>
