@@ -8,4 +8,4 @@ Is made to run on a RaspberryPi with Python Flask, an nginx reverse proxy and no
 
 Specific units can be chosen, which results in their data being displayed in dynamic charts. A snapshot of each chart can be downloaded as png file.
 
-![preview image](https://imgur.com/a/TRtPWae)
+![preview image](https://i.imgur.com/ybU83Qn.jpeg)
